@@ -7,16 +7,13 @@ import org.bukkit.entity.Player;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
-import ch.nonameweb.bukkit.plugins.minepvp.commands.LandCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
 
 public class CommandManager {
 
 	private MinePvP plugin;
 	
-	// Commands
-	private LandCommand landCommand; // TODO Ablšsen
-	
+	// Commands	
 	private InfoCommand infoCommand;
 	private BuyCommand buyCommand;
 	private UpgradeCommand upgradeCommand;
