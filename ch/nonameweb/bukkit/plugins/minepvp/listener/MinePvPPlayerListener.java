@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
@@ -17,11 +18,17 @@ public class MinePvPPlayerListener extends PlayerListener{
 	private MinePvP plugin;
 	private ClanManager clanManager;
 	
+	/**
+	 * 
+	 */
 	public MinePvPPlayerListener() {
 		plugin = MinePvP.getInstance();
 		clanManager = plugin.getClanManager();
 	}
 	
+	/**
+	 * 
+	 */
 	public void onPlayerCommandPreprocess( PlayerCommandPreprocessEvent event ) {
 		
 		if ( event.isCancelled() ) {
@@ -50,6 +57,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void onPlayerMove ( PlayerMoveEvent event ) {
 		
 		if ( event.isCancelled() ) {
@@ -81,7 +91,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 		
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public void onPlayerQuit ( PlayerQuitEvent event ) {
 		
 		Player player = event.getPlayer();
@@ -95,7 +107,23 @@ public class MinePvPPlayerListener extends PlayerListener{
 			plugin.getClanManager().resetFlag(player);
 		}
 		
+	}
+	
+	/**
+	 * 
+	 */
+	public void onPlayerTeleport ( PlayerTeleportEvent event ) {
 		
+		Player player = event.getPlayer();
+		
+		if ( player == null ) {
+			return;
+		}
+		
+		// Wenn jemand noch eine Flagge hat wird diese Resettet
+		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
+			plugin.getClanManager().resetFlag(player);
+		}
 		
 	}
 	
