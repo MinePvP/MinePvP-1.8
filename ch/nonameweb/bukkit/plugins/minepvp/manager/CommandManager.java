@@ -5,16 +5,22 @@ import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.LandCommand;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
 
 public class CommandManager {
 
 	private MinePvP plugin;
 	
 	// Commands
-	private LandCommand landCommand;
+	private LandCommand landCommand; // TODO Ablšsen
+	
 	private InfoCommand infoCommand;
+	private BuyCommand buyCommand;
+	private UpgradeCommand upgradeCommand;
+	
 	
 	/**
 	 * 
@@ -22,8 +28,9 @@ public class CommandManager {
 	public CommandManager() {
 		this.plugin = MinePvP.getInstance();
 		
-		landCommand = new LandCommand();
 		infoCommand = new InfoCommand();
+		buyCommand = new BuyCommand();
+		upgradeCommand = new UpgradeCommand();
 	}
 	
 	/**
@@ -38,12 +45,14 @@ public class CommandManager {
 			String subcommand = args[0];
 	        String[] subargs = Helper.removeFirst(args);
 	        
-			if ( subcommand.equalsIgnoreCase("land") ) {
-	            landCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("info") ) {
+			if ( subcommand.equalsIgnoreCase("info") ) {
 	        	infoCommand.execute(player, subargs);
+	        } else if ( subcommand.equalsIgnoreCase("buy") ) {
+	        	buyCommand.execute(player, subargs);
+	        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
+	        	upgradeCommand.execute(player, subargs);
 	        } else {
-	        	player.sendMessage("Usage: /minepvp land | ctb");
+	        	player.sendMessage("Usage: /minepvp buy|upgrade");
 	        }
 			
 		}
@@ -52,14 +61,6 @@ public class CommandManager {
 			plugin.log("CommandManager - Fehler : " + ex.getMessage() );
         }
 				
-	}
-	
-	public LandCommand getLandCommand() {
-		return this.landCommand;
-	}
-	
-	public InfoCommand getInfoCommand() {
-		return this.infoCommand;
 	}
 	
 }
