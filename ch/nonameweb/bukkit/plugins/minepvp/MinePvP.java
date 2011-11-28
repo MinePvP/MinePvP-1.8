@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.nonameweb.bukkit.plugins.minepvp.listener.MinePvPBlockListener;
+import ch.nonameweb.bukkit.plugins.minepvp.listener.MinePvPEntityListener;
 import ch.nonameweb.bukkit.plugins.minepvp.listener.MinePvPPlayerListener;
 import ch.nonameweb.bukkit.plugins.minepvp.manager.ClanManager;
 import ch.nonameweb.bukkit.plugins.minepvp.manager.CommandManager;
@@ -32,6 +33,7 @@ public class MinePvP extends JavaPlugin {
 	// Listeners
 	private MinePvPPlayerListener playerListener;
 	private MinePvPBlockListener blockListener;
+	private MinePvPEntityListener entityListener;
 	
 	// Logger
 	private Logger logger = Logger.getLogger("Minecraft");
@@ -66,6 +68,7 @@ public class MinePvP extends JavaPlugin {
 	    // Listeners
 	    playerListener = new MinePvPPlayerListener();
 	    blockListener = new MinePvPBlockListener();
+	    entityListener = new MinePvPEntityListener();
 		
 	    registerEvents();
 	    
@@ -115,7 +118,8 @@ public class MinePvP extends JavaPlugin {
 	    
 	    // Capture the Block
 	    getConfig().addDefault("Global.Settings.CTB.PointsPerBlock", 2);
-		
+	    getConfig().addDefault("Global.Settings.CTB.MinPlayerOnline", 3);
+	    
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
@@ -129,7 +133,7 @@ public class MinePvP extends JavaPlugin {
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
         
         // Ent
-        getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, playerListener, Priority.Lowest, this);
+        getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Lowest, this);
 		
         // Block
         getServer().getPluginManager().registerEvent(Event.Type.BLOCK_DAMAGE, blockListener, Priority.Lowest, this);

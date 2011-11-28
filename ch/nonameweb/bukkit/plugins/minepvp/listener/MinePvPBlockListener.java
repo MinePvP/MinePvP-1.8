@@ -56,6 +56,11 @@ public class MinePvPBlockListener extends BlockListener{
 							
 							// Punkte geben
 							clanManager.addPoints(player);
+							
+							player.sendMessage("Du hast die Flagge erfolgreich abgegben!");
+							
+							// Das gegnerische Team Informieren das Ihre Flagge erfolgreich abgegebn wurde,
+							clanManager.sendClanMessage(clanLand, "Der Spieler " + player.getName() + " konnte erfolgreich erure Flagge zur Clan Base bringen!");
 						}
 						
 					}
@@ -64,14 +69,25 @@ public class MinePvPBlockListener extends BlockListener{
 					
 					if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
 						
-						// Flag Block Entfernen
-						block.setTypeId(0);
-						
-						ItemStack itemStack = new ItemStack(35);
-						
-						player.getInventory().setHelmet( itemStack );
-						
-						clanManager.setPlayerHasFlag(player, clanLand);
+						// überprüfen ob die mindest anzahl spieler des gegner teams online sind
+						if ( clanManager.isMinPlayerOnline( clanLand ) ) {
+							// Flag Block Entfernen
+							block.setTypeId(0);
+							
+							ItemStack itemStack = new ItemStack(35);
+							
+							player.getInventory().setHelmet( itemStack );
+							
+							clanManager.setPlayerHasFlag(player, clanLand);
+							
+							player.sendMessage("Du hast die Flagge von " + clanLand.getName() + " gestohlen!");
+							
+							// Das gegnerrische Team benachrichtigen das Ihre Flagge erbeutet wurde
+							clanManager.sendClanMessage(clanLand, "Die Flagge wurde von " + player.getName() + " erbeutet!");
+						} else {
+							
+							player.sendMessage("Es sind zu wenige Spieler aus dem gegnerischem Team online!");
+						}
 						
 					} else {
 						player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );

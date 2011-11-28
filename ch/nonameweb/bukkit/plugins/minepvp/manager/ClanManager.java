@@ -3,6 +3,9 @@ package ch.nonameweb.bukkit.plugins.minepvp.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
+import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 	
@@ -12,15 +15,16 @@ import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 public class ClanManager {
 	
 	MinePvP plugin;
+	SimpleClans simpleClans;
 	
 	ArrayList<Clan> clans = new ArrayList<Clan>();;
-	ArrayList<Player> players = new ArrayList<Player>();
 	
 	/**
 	 * 
 	 */
 	public ClanManager() {
 		plugin = MinePvP.getInstance();
+		simpleClans = plugin.getSimpleClans();
 		loadClans();
 	}
 	
@@ -440,7 +444,6 @@ public class ClanManager {
 			
 			if ( clan2.equals( clan ) ) {
 				clan.setPlayerHasFlag(player);
-				players.add(player);
 			}
 			
 		}
@@ -454,10 +457,13 @@ public class ClanManager {
 	 */
 	public Boolean hasPlayerAFlag( Player player ) {
 		
-		for ( Player player2 : players ) {
+		for ( Clan clan : clans ) {
 			
-			if ( player.equals( player2 ) ) {
-				return true;
+			if ( player.equals( clan.getPlayerHasFlag().getName() ) ) {
+				if ( clan.getPlayerHasFlag() != null ) {
+					return true;
+				}
+				
 			}
 			
 		}
@@ -493,7 +499,7 @@ public class ClanManager {
 			
 			if ( clan.getPlayerHasFlag() != null ) {
 				
-				if ( clan.getPlayerHasFlag().getName().equalsIgnoreCase( player.getName() )) {
+				if ( player.getName().equalsIgnoreCase( clan.getPlayerHasFlag().getName() ) ) {
 					
 					clan.resetPlayerHasFlag();
 					plugin.getServer().getWorld("world").getBlockAt( clan.getBaseLocation() ).setTypeId(35);
@@ -506,4 +512,50 @@ public class ClanManager {
 		
 	}
 	
+	public Boolean isMinPlayerOnline( Clan clan ) {
+		
+		Integer minPlayers = plugin.getConfig().getInt("Global.Settings.CTB.MinPlayerOnline");
+		Integer onlinePlayers = 0;
+		
+		Player[] players = plugin.getServer().getOnlinePlayers();
+		
+		for ( Player player : players ) {
+			
+			if ( simpleClans.getClanManager().getClanByPlayerName( player.getName() ).getName().equalsIgnoreCase( clan.getName() ) ) {
+				
+				onlinePlayers++;
+				
+				if ( minPlayers <= onlinePlayers ) {
+					return true;
+				}
+				
+			}
+			
+		}
+		
+		if ( minPlayers <= onlinePlayers ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void sendClanMessage( Clan clan, String message) {
+		
+		List<ClanPlayer> clanPlayers = simpleClans.getClanManager().getAllClanPlayers();
+		
+		for ( ClanPlayer player : clanPlayers ) {
+			
+			if ( player.getClan().getName().equalsIgnoreCase(clan.getName()) ) {
+				
+				plugin.getServer().getPlayer( player.getName() ).sendMessage(message);
+				
+			}
+		}
+		
+		
+		
+		
+		
+	}
 }
