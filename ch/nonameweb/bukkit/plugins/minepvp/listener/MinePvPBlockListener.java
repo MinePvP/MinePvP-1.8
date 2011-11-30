@@ -4,8 +4,10 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
@@ -38,17 +40,22 @@ public class MinePvPBlockListener extends BlockListener{
 		
 		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
 		
-		if ( simpleClans.getClanManager().getAnyClanPlayer( player.getName() ).getClan() != null ) {
-			
-			if ( clanLand != null ) {
+		// Ist es in einen gebit von einem Clan?
+		if ( clanLand != null ) {
+		
+			// Hat der Spieler einen Clan?
+			if ( clanManager.hasPlayerAClan(player) ) {
 				
-				if ( clanLand.getName().equalsIgnoreCase( simpleClans.getClanManager().getClanByPlayerName( player.getName() ).getName() ) ) {
+				// Ist er im gleichen Clan wie das Land?
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
 					
+					// Wird auf den Flaggen Block gehauen?
 					if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
 						
+						// hat der Spieler eine Flagge?
 						if ( clanManager.hasPlayerAFlag(player) ) {
 							
-							// Flag wegnehmen
+							// Flag wegnehmen TODO Helm zurücksetzen
 							player.getInventory().setHelmet(null);
 							
 							// Flag von Clan wieder herstellen
@@ -61,12 +68,19 @@ public class MinePvPBlockListener extends BlockListener{
 							
 							// Das gegnerische Team Informieren das Ihre Flagge erfolgreich abgegebn wurde,
 							clanManager.sendClanMessage(clanLand, "Der Spieler " + player.getName() + " konnte erfolgreich erure Flagge zur Clan Base bringen!");
+						} else {
+							// TODO Der Spieler hat keien Flagge Protection von der Flage
 						}
+						
+					} else {
+						
+						// TODO Protection von den anderen Blöcken rund um die Flagge
 						
 					}
 					
 				} else {
 					
+					// Wird auf die Flagge geschlagen?
 					if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
 						
 						// überprüfen ob die mindest anzahl spieler des gegner teams online sind
@@ -74,8 +88,11 @@ public class MinePvPBlockListener extends BlockListener{
 							// Flag Block Entfernen
 							block.setTypeId(0);
 							
-							ItemStack itemStack = new ItemStack(35);
+							// Helm Item wird im Inventar verstaut
+							player.getInventory().addItem( player.getInventory().getHelmet() );
 							
+							// Flagge wird als Helm gesetzt
+							ItemStack itemStack = new ItemStack(35);
 							player.getInventory().setHelmet( itemStack );
 							
 							clanManager.setPlayerHasFlag(player, clanLand);
@@ -90,23 +107,89 @@ public class MinePvPBlockListener extends BlockListener{
 						}
 						
 					} else {
-						player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );
-						player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") ) );
+						
 					}
-					
+									
 				}
+				
+			} else {
 				
 			}
 			
 		} else {
-			if ( clanLand != null ) {
-				player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );
-				player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") ) );
-			}
 			
 		}
 		
 	}
+	
+	public void onBlockBreak( BlockBreakEvent event ) {
+		
+		Player player = event.getPlayer();
+		Block block = event.getBlock();
+		
+		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
+		
+		
+		// Ist es in einen gebit von einem Clan?
+		if ( clanLand != null ) {
+		
+			// Hat der Spieler einen Clan?
+			if ( clanManager.hasPlayerAClan(player) ) {
+				
+				// Ist er im gleichen Clan wie das Land?
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
+					
+					
+					
+				} else {
+					clanManager.playerDamage(player);
+				}
+				
+			} else {
+				clanManager.playerDamage(player);			
+			}
+			
+		} else {
+			
+		}
+		
+	}
+	
+	
+	public void onBlockPlace( BlockPlaceEvent event ) {
+		
+		Player player = event.getPlayer();
+		Block block = event.getBlock();
+		
+		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
+		
+		// Ist es in einen gebit von einem Clan?
+		if ( clanLand != null ) {
+		
+			// Hat der Spieler einen Clan?
+			if ( clanManager.hasPlayerAClan(player) ) {
+				
+				// Ist er im gleichen Clan wie das Land?
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
+					
+					
+					
+				} else {
+					clanManager.playerDamage(player);
+				}
+				
+			} else {
+				clanManager.playerDamage(player);			
+			}
+			
+		} else {
+			
+		}
+		
+		
+		
+	}
+
 
 	
 }

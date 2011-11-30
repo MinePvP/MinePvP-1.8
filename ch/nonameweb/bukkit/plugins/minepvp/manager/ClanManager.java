@@ -553,9 +553,33 @@ public class ClanManager {
 			}
 		}
 		
-		
-		
-		
-		
 	}
+	
+	public void playerDamage( Player player ) {
+		player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );
+		player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") ) );	
+	}
+	
+	public Boolean hasPlayerAClan( Player player ) {
+		
+		if ( simpleClans.getClanManager().getAnyClanPlayer( player.getName() ).getClan() != null ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public String getClanNameByPlayer( Player player ) {
+		
+		String name = null;
+		
+		name = simpleClans.getClanManager().getClanByPlayerName( player.getName() ).getName();
+		
+		if ( name != null ) {
+			return name;
+		}
+		
+		return null;
+	}
+	
 }
