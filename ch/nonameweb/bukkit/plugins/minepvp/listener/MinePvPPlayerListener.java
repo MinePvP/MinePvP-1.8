@@ -2,7 +2,11 @@ package ch.nonameweb.bukkit.plugins.minepvp.listener;
 
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -126,5 +130,47 @@ public class MinePvPPlayerListener extends PlayerListener{
 		}
 		
 	}
+	
+	public void onPlayerBucketEmpty (PlayerBucketEmptyEvent event) {
+		
+		
+		Player player = event.getPlayer();
+		Material bucket = event.getBucket();
+		
+		Clan clanLand = clanManager.getClanByLocation( event.getBlockClicked().getLocation() );
+		
+		// Ist es in einen gebit von einem Clan?
+		if ( clanLand != null ) {
+		
+			// Hat der Spieler einen Clan?
+			if ( clanManager.hasPlayerAClan(player) ) {
+				
+				// Ist er im gleichen Clan wie das Land?
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
+					
+					
+					
+				} else {
+					
+					// Wasser / Lava unterbinden
+					if ( bucket.getId() == 326 || bucket.getId() == 327 ) {
+						event.setCancelled(true);
+					}					
+					
+					clanManager.playerDamage(player);
+				}
+				
+			} else {
+				clanManager.playerDamage(player);			
+			}
+			
+		} else {
+			
+		}
+		
+		
+		
+	}
+	
 	
 }

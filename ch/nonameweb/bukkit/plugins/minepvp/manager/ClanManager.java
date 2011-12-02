@@ -7,6 +7,7 @@ import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 	
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
@@ -459,7 +460,9 @@ public class ClanManager {
 		
 		for ( Clan clan : clans ) {
 			
-			if ( player.equals( clan.getPlayerHasFlag().getName() ) ) {
+			
+			//TODO Problem beheben
+			if ( player.getName().equalsIgnoreCase( clan.getPlayerHasFlag().getName() ) ) {
 				if ( clan.getPlayerHasFlag() != null ) {
 					return true;
 				}
@@ -580,6 +583,56 @@ public class ClanManager {
 		}
 		
 		return null;
+	}
+	
+	public Boolean isBlockAroundAFlag( Block block ) {
+		
+		Clan clan = getClanByLocation( block.getLocation() );
+		Block flagBlock = clan.getBaseLocation().getBlock();
+		
+		/*
+		if ( clan.getBaseLocation().distance(flagBlock.getLocation()) <= 2 ) {
+			return true;
+		}
+		*/
+		
+		// Boden
+		if ( block.getX() == flagBlock.getX() && block.getY() == flagBlock.getY() && block.getZ() == flagBlock.getZ() ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() -1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() +1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() +1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() +1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() +1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() +1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() ) && block.getY() == ( flagBlock.getY()  -2 ) && block.getZ() == ( flagBlock.getZ() -1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() +1 ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() +1 ) && block.getY() == ( flagBlock.getY() -2 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} // Halterrung 
+		else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() -1) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() -1 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() -1 ) && block.getY() == ( flagBlock.getY() +1 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} else if ( block.getX() == ( flagBlock.getX() ) && block.getY() == ( flagBlock.getY() +1 ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		} // Flagge
+		else if ( block.getX() == ( flagBlock.getX() ) && block.getY() == ( flagBlock.getY() ) && block.getZ() == ( flagBlock.getZ() ) ) {
+			return true;
+		}
+		
+		
+		return false;
 	}
 	
 }
