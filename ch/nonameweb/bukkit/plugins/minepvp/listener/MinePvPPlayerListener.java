@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -166,6 +167,53 @@ public class MinePvPPlayerListener extends PlayerListener{
 			
 		} else {
 			
+		}
+		
+		
+		
+	}
+	
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		
+		Player player = event.getPlayer();
+		Block block = event.getClickedBlock();
+		
+		try {
+			
+			Clan clanLand = clanManager.getClanByLocation( event.getClickedBlock().getLocation() );
+			
+			// Ist es in einen gebit von einem Clan?
+			if ( clanLand != null ) {
+			
+				// Hat der Spieler einen Clan?
+				if ( clanManager.hasPlayerAClan(player) ) {
+					
+					// Ist er im gleichen Clan wie das Land?
+					if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
+						
+						
+						
+					} else {
+						
+						// Chests and Furnances
+						if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {
+							event.setCancelled(true);
+						}					
+						
+						clanManager.playerDamage(player);
+					}
+					
+				} else {
+					clanManager.playerDamage(player);			
+				}
+				
+			} else {
+				
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		
 		

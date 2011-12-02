@@ -5,6 +5,7 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -69,12 +70,20 @@ public class MinePvPBlockListener extends BlockListener{
 							// Das gegnerische Team Informieren das Ihre Flagge erfolgreich abgegebn wurde,
 							clanManager.sendClanMessage(clanLand, "Der Spieler " + player.getName() + " konnte erfolgreich erure Flagge zur Clan Base bringen!");
 						} else {
-							// TODO Der Spieler hat keien Flagge Protection von der Flage
+							// Protection der Flagge fals Spieler keine Flagge hat.
+							event.setCancelled(true);
 						}
 						
 					} else {
 						
 						// TODO Protection von den anderen Blšcken rund um die Flagge
+						
+						if ( clanManager.isBlockAroundAFlag(block) ) {
+							
+							event.setCancelled(true);
+							
+						}
+						
 						
 					}
 					
@@ -89,8 +98,10 @@ public class MinePvPBlockListener extends BlockListener{
 							block.setTypeId(0);
 							
 							// Helm Item wird im Inventar verstaut
-							player.getInventory().addItem( player.getInventory().getHelmet() );
-							
+							if ( player.getInventory().getHelmet() != null ) {
+								player.getInventory().addItem( player.getInventory().getHelmet() );
+							}
+
 							// Flagge wird als Helm gesetzt
 							ItemStack itemStack = new ItemStack(35);
 							player.getInventory().setHelmet( itemStack );
@@ -104,11 +115,21 @@ public class MinePvPBlockListener extends BlockListener{
 						} else {
 							
 							player.sendMessage("Es sind zu wenige Spieler aus dem gegnerischem Team online!");
+							
+							event.setCancelled(true);
+							
 						}
 						
 					} else {
 						
 					}
+					
+					// Protecten von Chests und Furnance
+					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
+						event.setCancelled(true);
+					}
+					
+					
 									
 				}
 				
@@ -117,7 +138,7 @@ public class MinePvPBlockListener extends BlockListener{
 			}
 			
 		} else {
-			
+						
 		}
 		
 	}
@@ -174,7 +195,7 @@ public class MinePvPBlockListener extends BlockListener{
 					
 					
 					
-				} else {
+				} else {				
 					clanManager.playerDamage(player);
 				}
 				
@@ -189,7 +210,5 @@ public class MinePvPBlockListener extends BlockListener{
 		
 		
 	}
-
-
 	
 }

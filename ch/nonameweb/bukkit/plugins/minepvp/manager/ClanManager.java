@@ -459,14 +459,13 @@ public class ClanManager {
 	public Boolean hasPlayerAFlag( Player player ) {
 		
 		for ( Clan clan : clans ) {
-			
-			
-			//TODO Problem beheben
-			if ( player.getName().equalsIgnoreCase( clan.getPlayerHasFlag().getName() ) ) {
-				if ( clan.getPlayerHasFlag() != null ) {
-					return true;
+						
+			if ( clan.getPlayerHasFlag() != null ) {
+				if ( player.getName().equalsIgnoreCase( clan.getPlayerHasFlag().getName() ) ) {
+					if ( clan.getPlayerHasFlag() != null ) {
+						return true;
+					}
 				}
-				
 			}
 			
 		}

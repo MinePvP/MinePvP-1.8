@@ -132,6 +132,7 @@ public class MinePvP extends JavaPlugin {
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_TELEPORT, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_BUCKET_EMPTY, playerListener, Priority.Lowest, this);
+        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
         
         // Ent
         getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Lowest, this);
@@ -140,6 +141,7 @@ public class MinePvP extends JavaPlugin {
         getServer().getPluginManager().registerEvent(Event.Type.BLOCK_DAMAGE, blockListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, blockListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, blockListener, Priority.Lowest, this);
+
 	}
 	
 	public static MinePvP getInstance()
