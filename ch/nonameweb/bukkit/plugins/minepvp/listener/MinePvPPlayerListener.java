@@ -54,10 +54,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 		
 		String command = split[0];
 		
-		if ( command.equalsIgnoreCase("minepvp") ) {
-			
-			player.sendMessage("Command: minepvp");
-			
+		if ( command.equalsIgnoreCase("minepvp") ) {			
 			plugin.getCommandManager().processMinePvP(player, Helper.removeFirst(split));
 		}
 	}

@@ -140,6 +140,44 @@ public class ClanManager {
 		
 	}
 	
+	public void reloadClans() {
+		
+		
+		@SuppressWarnings("unchecked")
+		List<String> clansList = plugin.getConfig().getList("Clans.List");
+		
+		if ( clansList != null ) {
+			
+			/*
+			 * Falls Clans schon befüllt ist wird diese 
+			 * zuerst gespeichert und dann neu erstellt
+			 */
+			if ( clans != null ) {
+				saveClans();
+				plugin.reloadConfig();
+				
+				for ( Clan clan : clans ) {
+					
+					clan.load(clan.getName(), plugin.getConfig());
+					
+					if ( clan.getStufe() == 0 ) {
+						clan.setRadius( plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.Radius") );
+					} else {
+						clan.setRadius( getRadiusList().get( (clan.getStufe() - 1) ) );
+					}
+					
+					plugin.log("Load Clan : " + clan.getName() );
+					
+				}
+			}
+						
+		}
+		
+		saveClans();
+		
+		
+	}
+	
 	/**
 	 * 
 	 */

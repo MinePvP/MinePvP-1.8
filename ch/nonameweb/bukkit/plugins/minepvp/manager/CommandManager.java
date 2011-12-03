@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.HelpCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.ReloadCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
 
 public class CommandManager {
@@ -17,7 +19,8 @@ public class CommandManager {
 	private InfoCommand infoCommand;
 	private BuyCommand buyCommand;
 	private UpgradeCommand upgradeCommand;
-	
+	private ReloadCommand reloadCommand;
+	private HelpCommand helpCommand;
 	
 	/**
 	 * 
@@ -28,6 +31,8 @@ public class CommandManager {
 		infoCommand = new InfoCommand();
 		buyCommand = new BuyCommand();
 		upgradeCommand = new UpgradeCommand();
+		reloadCommand = new ReloadCommand();
+		helpCommand = new HelpCommand();
 	}
 	
 	/**
@@ -48,8 +53,12 @@ public class CommandManager {
 	        	buyCommand.execute(player, subargs);
 	        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
 	        	upgradeCommand.execute(player, subargs);
-	        } else {
-	        	player.sendMessage("Usage: /minepvp buy|upgrade");
+	        } else if ( subcommand.equalsIgnoreCase("reload") ) {
+	        	reloadCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("help") ) {
+	        	helpCommand.execute(player, subargs);
+		    } else {
+	        	player.sendMessage("Usage: /minepvp info|buy|upgrade");
 	        }
 			
 		}
