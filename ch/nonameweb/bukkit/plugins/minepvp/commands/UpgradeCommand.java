@@ -31,6 +31,12 @@ public class UpgradeCommand {
 					player.sendMessage("Land konnte nicht Upgraden!");
 				}
 
+			} else if ( arg[0].equalsIgnoreCase("alertsystem") ) {
+				
+				if ( plugin.getClanManager().buyUpgradeAlertSystem(player) ) {
+					player.sendMessage("Alarmanlage wurde gekauft!");
+				}			
+			
 			} else {
 				player.sendMessage("Usage : /minepvp upgrade land");
 			}

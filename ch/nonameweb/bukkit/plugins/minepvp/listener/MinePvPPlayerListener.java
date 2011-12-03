@@ -2,6 +2,7 @@ package ch.nonameweb.bukkit.plugins.minepvp.listener;
 
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -74,12 +75,34 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
+		Clan playerClan = clanManager.getClanByPlayer(player);
 		Clan clanFrom = clanManager.getClanByLocation( event.getFrom() );
 		Clan clanTo = clanManager.getClanByLocation( event.getTo() );
 		
 		if ( clanFrom == null ) {
 			
 			if ( clanTo != null ) {
+				
+				// AlarmSystem
+				if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
+					
+					if ( clanTo.getAlertsystem() == 1 ) {
+						
+						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
+						
+					} else if ( clanTo.getAlertsystem() == 2 ) {
+						
+						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+						
+					} else if ( clanTo.getAlertsystem() == 3 ) {
+						
+						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+						
+					}
+					
+				}
+				
+				
 				player.sendMessage("Du betrittst das gebiebt von " + clanTo.getName() + "!" );
 			}
 			

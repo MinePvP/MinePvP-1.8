@@ -116,6 +116,11 @@ public class MinePvP extends JavaPlugin {
 	    getConfig().addDefault("Global.Settings.Land.Stufen.Radius", Arrays.asList( listStufenRadius ));
 	    getConfig().addDefault("Global.Settings.Land.Stufen.Kosten", Arrays.asList( listStufenKosten ));
 	    
+	    // AlertSystem
+	    String[] listAlertSystemKosten = {"20", "40", "60"};
+	    
+	    getConfig().addDefault("Global.Settings.Land.AlertSystem.Kosten", Arrays.asList( listAlertSystemKosten ));
+	    
 	    // Capture the Block
 	    getConfig().addDefault("Global.Settings.CTB.PointsPerBlock", 2);
 	    getConfig().addDefault("Global.Settings.CTB.MinPlayerOnline", 3);

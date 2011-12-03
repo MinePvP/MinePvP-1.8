@@ -6,6 +6,7 @@ import java.util.List;
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -670,6 +671,80 @@ public class ClanManager {
 		
 		
 		return false;
+	}
+	
+	
+	
+	public Boolean buyUpgradeAlertSystem( Player player ) {
+		
+		player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 1");
+		
+		Clan clan = getClanByPlayer(player);
+		
+		player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 2");
+		
+		if ( clan != null ) {
+			
+			if ( clan.getAlertsystem() != 3 ) {
+				player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 3");
+				
+				if ( getClanPointsForUpgradeAlertSystem(clan, player) ) {
+					
+					player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 4");
+					saveClans();
+					return true;
+				}
+			} else {
+				player.sendMessage("Alarmanlage ist schon voll ausgebaut!");
+			}
+			
+			
+			
+			
+		}
+		
+		return false;
+	}
+	
+	private Boolean getClanPointsForUpgradeAlertSystem( Clan clan, Player player ) {
+		
+		Integer kosten = getKostenListAlertSystem().get( clan.getAlertsystem() );
+		Integer points = clan.getPoints();
+		
+		player.sendMessage(" Kosten : " + kosten + " Points : " + points);
+		
+		Integer rest = points - kosten;
+		
+		if ( rest >= 0 ) {
+			
+			player.sendMessage("Rest" + rest);
+			
+			clan.setPoints( rest );
+			clan.setAlertsystem( clan.getAlertsystem() + 1 );
+			
+			saveClans();
+			
+			return true;
+		}		
+		
+		return false;
+	}
+	
+	public ArrayList<Integer> getKostenListAlertSystem() {
+		
+		ArrayList<Integer> kostenList = new ArrayList<Integer>();
+		
+		@SuppressWarnings("unchecked")
+		List<String> list = plugin.getConfig().getList("Global.Settings.Land.AlertSystem.Kosten");
+		
+		for ( String string : list ) {
+			
+			kostenList.add( Integer.parseInt(string) );
+			
+		}
+		
+		
+		return kostenList;
 	}
 	
 }

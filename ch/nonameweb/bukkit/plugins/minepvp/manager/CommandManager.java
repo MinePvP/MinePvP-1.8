@@ -42,30 +42,25 @@ public class CommandManager {
 	 */
 	public void processMinePvP( Player player, String[] args ) {
 		
-		try {
 		
-			String subcommand = args[0];
-	        String[] subargs = Helper.removeFirst(args);
-	        
-			if ( subcommand.equalsIgnoreCase("info") ) {
-	        	infoCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("buy") ) {
-	        	buyCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
-	        	upgradeCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("reload") ) {
-	        	reloadCommand.execute(player, subargs);
-		    } else if ( subcommand.equalsIgnoreCase("help") ) {
-	        	helpCommand.execute(player, subargs);
-		    } else {
-	        	player.sendMessage("Usage: /minepvp info|buy|upgrade");
-	        }
-			
-		}
-		catch (Exception ex)
-        {
-			plugin.log("CommandManager - Fehler : " + ex.getMessage() );
+		String subcommand = args[0];
+        String[] subargs = Helper.removeFirst(args);
+        
+		if ( subcommand.equalsIgnoreCase("info") ) {
+        	infoCommand.execute(player, subargs);
+        } else if ( subcommand.equalsIgnoreCase("buy") ) {
+        	buyCommand.execute(player, subargs);
+        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
+        	upgradeCommand.execute(player, subargs);
+        } else if ( subcommand.equalsIgnoreCase("reload") ) {
+        	reloadCommand.execute(player, subargs);
+	    } else if ( subcommand.equalsIgnoreCase("help") ) {
+        	helpCommand.execute(player, subargs);
+	    } else {
+        	player.sendMessage("Usage: /minepvp info|buy|upgrade");
         }
+			
+		
 				
 	}
 	

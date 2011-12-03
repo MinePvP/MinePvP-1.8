@@ -17,6 +17,9 @@ public class Clan {
 	private Integer stufe = null;
 	private Integer radius = null;
 	
+	// Alertsystem
+	private Integer alertsystem = null;
+	
 	// Punkte
 	private Integer points = null;
 	
@@ -67,6 +70,9 @@ public class Clan {
 		// Stufe
 		setStufe( config.getInt("Clans." + getName() + ".Stufe", 0) );
 		
+		// AlertSystem
+		setAlertsystem( config.getInt("Clans." + getName() + ".AlertSystem", 0) );
+		
 		// Punkte
 		setPoints( config.getInt("Clans." + getName() + ".Punkte", 0) );
 		
@@ -85,6 +91,9 @@ public class Clan {
 		
 		// Stufe
 		config.set("Clans." + getName() + ".Stufe", getStufe());
+		
+		// AlertSystem
+		config.set("Clans." + getName() + ".AlertSystem", getAlertsystem());
 		
 		// Punkte
 		config.set("Clans." + getName() + ".Punkte", getPoints());
@@ -255,6 +264,18 @@ public class Clan {
 	 */
 	public void resetPlayerHasFlag() {
 		this.playerHasFlag = null;
+	}
+
+	public Integer getAlertsystem() {
+		return alertsystem;
+	}
+
+	public void setAlertsystem(Integer alertsystem) {
+		this.alertsystem = alertsystem;
+	}
+	
+	public void upgradeAlertsystem(Integer alertsystem) {
+		this.alertsystem = this.alertsystem + alertsystem;
 	}
 	
 }
