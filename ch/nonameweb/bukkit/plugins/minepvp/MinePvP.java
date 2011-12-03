@@ -92,7 +92,10 @@ public class MinePvP extends JavaPlugin {
 	}
 	
 	public void log( String message ) {
-		logger.info(ChatColor.BLUE + "[MinePvP] : " + message);
+		
+		getServer().getConsoleSender().sendMessage(ChatColor.BLUE + "[MinePvP] : " + message);
+		
+		//logger.info(ChatColor.BLUE + "[MinePvP] : " + message);
 	}
 	
 	private void loadConfig() {
