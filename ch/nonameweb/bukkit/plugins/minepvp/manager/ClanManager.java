@@ -56,7 +56,7 @@ public class ClanManager {
 						
 						setClanFlag(player);
 						
-						saveClans();
+						clan.save(plugin.getConfig());
 						loadClans();
 						
 						return true;
@@ -522,11 +522,10 @@ public class ClanManager {
 			
 			if ( clan.getName().equalsIgnoreCase( plugin.getClanManager().getClanByPlayer(player).getName() ) ) {
 				clan.addPoints( plugin.getConfig().getInt("Global.Settings.CTB.PointsPerBlock") );
+				clan.save(plugin.getConfig());
 			}
 			
 		}
-		
-		saveClans();
 		
 	}
 	
@@ -691,7 +690,7 @@ public class ClanManager {
 				if ( getClanPointsForUpgradeAlertSystem(clan, player) ) {
 					
 					player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 4");
-					saveClans();
+					clan.save(plugin.getConfig());
 					return true;
 				}
 			} else {
@@ -722,7 +721,7 @@ public class ClanManager {
 			clan.setPoints( rest );
 			clan.setAlertsystem( clan.getAlertsystem() + 1 );
 			
-			saveClans();
+			clan.save(plugin.getConfig());
 			
 			return true;
 		}		
