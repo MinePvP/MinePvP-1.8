@@ -25,6 +25,7 @@ public class Clan {
 	
 	private Player playerHasFlag = null;
 	
+	private Integer flags = null;
 	
 	// TeamSpawn
 	private Boolean teamSpawn = false;
@@ -80,6 +81,8 @@ public class Clan {
 		// Punkte
 		setPoints( config.getInt("Clans." + getName() + ".Punkte", 0) );
 		
+		setFlags( config.getInt("Clans." + getName() + ".Flaggen", 0) );
+		
 		// TeamSpawn
 		setTeamSpawn( config.getBoolean("Clans." + getName() + ".TeamSpawn", false) );
 	}
@@ -103,6 +106,8 @@ public class Clan {
 		
 		// Punkte
 		config.set("Clans." + getName() + ".Punkte", getPoints());
+		
+		config.set("Clans." + getName() + ".Flaggen", getFlags());
 		
 		// TeamSpawn
 		config.set("Clans." + getName() + ".TeamSpawn", false);
@@ -234,6 +239,7 @@ public class Clan {
 	 */
 	public void addPoints( Integer points ) {
 		this.points += points;
+		this.flags += 1;
 	}
 
 	/**
@@ -293,6 +299,14 @@ public class Clan {
 
 	public void setTeamSpawn(Boolean teamSpawn) {
 		this.teamSpawn = teamSpawn;
+	}
+
+	public Integer getFlags() {
+		return flags;
+	}
+
+	public void setFlags(Integer flags) {
+		this.flags = flags;
 	}
 	
 	

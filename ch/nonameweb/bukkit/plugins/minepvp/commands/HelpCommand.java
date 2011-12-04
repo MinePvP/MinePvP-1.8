@@ -23,8 +23,9 @@ public class HelpCommand {
 		player.sendMessage(ChatColor.WHITE + "/minepvp info " + ChatColor.GRAY + "// Giebt auskunft Ÿber das Plugin");
 		player.sendMessage(ChatColor.WHITE + "/minepvp help " + ChatColor.GRAY + "// Giebt auskunft Ÿber die verschiedenen Befehle");
 		player.sendMessage(ChatColor.WHITE + "/minepvp reload " + ChatColor.GRAY + "// Reloadet die Config von MinePvP");
-		player.sendMessage(ChatColor.WHITE + "/minepvp buy land | alertsystem " + ChatColor.GRAY + "// Kaufen von Land oder der Alarmanlage");
-		player.sendMessage(ChatColor.WHITE + "/minepvp upgrade land | alertsystem " + ChatColor.GRAY + "// Upgraden des Landes oder der Alarmanlage");
+		player.sendMessage(ChatColor.WHITE + "/minepvp buy land | alertsystem | teamspawn" + ChatColor.GRAY + "// Kaufen von Land oder der Alarmanlage");
+		player.sendMessage(ChatColor.WHITE + "/minepvp upgrade land | alertsystem" + ChatColor.GRAY + "// Upgraden des Landes oder der Alarmanlage");
+		player.sendMessage(ChatColor.WHITE + "/minepvp teamspawn " + ChatColor.GRAY + "// Teleportiert einem zum TeamSpawn(Base)");
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		
 	}

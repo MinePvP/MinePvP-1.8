@@ -51,7 +51,7 @@ public class BuyCommand {
 				
 				
 			} else {
-				player.sendMessage("Usage : /minepvp buy land|alert");
+				player.sendMessage("Usage : /minepvp buy land|alertsystem|teamspawn");
 			}
 			
 		}

@@ -768,6 +768,14 @@ public class ClanManager {
 		
 		return false;
 	}
+
+	public ArrayList<Clan> getClans() {
+		return clans;
+	}
+
+	public void setClans(ArrayList<Clan> clans) {
+		this.clans = clans;
+	}
 	
 	
 }

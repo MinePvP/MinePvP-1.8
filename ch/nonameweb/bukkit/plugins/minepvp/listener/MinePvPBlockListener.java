@@ -57,7 +57,8 @@ public class MinePvPBlockListener extends BlockListener{
 						if ( clanManager.hasPlayerAFlag(player) ) {
 							
 							// Flag wegnehmen TODO Helm zurücksetzen
-							player.getInventory().setHelmet(null);
+							
+							//player.getInventory().getHelmet().setTypeId(0);
 							
 							// Flag von Clan wieder herstellen
 							clanManager.resetFlag(player);
