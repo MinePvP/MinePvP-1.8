@@ -112,6 +112,9 @@ public class MinePvP extends JavaPlugin {
 	    
 	    getConfig().addDefault("Global.Settings.Land.MinAbstandZwischenClans", 1000);
 	    
+	    // TeamSpawn Kosten
+	    getConfig().addDefault("Global.Settings.Land.TeamSpawn.Kosten", 40);
+	    
 	    // Stufen
 	    String[] listStufenRadius = {"30", "40", "50", "60", "70", "80", "90", "100", "110", "120"};
 	    String[] listStufenKosten = {"5", "5", "10", "10", "20", "20", "30", "30", "40", "40"};

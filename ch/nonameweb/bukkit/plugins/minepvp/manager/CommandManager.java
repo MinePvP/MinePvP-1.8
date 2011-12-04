@@ -9,6 +9,7 @@ import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.HelpCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.ReloadCommand;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.TeamSpawnCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
 
 public class CommandManager {
@@ -21,6 +22,7 @@ public class CommandManager {
 	private UpgradeCommand upgradeCommand;
 	private ReloadCommand reloadCommand;
 	private HelpCommand helpCommand;
+	private TeamSpawnCommand teamSpawnCommand;
 	
 	/**
 	 * 
@@ -33,6 +35,7 @@ public class CommandManager {
 		upgradeCommand = new UpgradeCommand();
 		reloadCommand = new ReloadCommand();
 		helpCommand = new HelpCommand();
+		teamSpawnCommand = new TeamSpawnCommand();
 	}
 	
 	/**
@@ -56,6 +59,8 @@ public class CommandManager {
         	reloadCommand.execute(player, subargs);
 	    } else if ( subcommand.equalsIgnoreCase("help") ) {
         	helpCommand.execute(player, subargs);
+	    } else if ( subcommand.equalsIgnoreCase("teamspawn") ) {
+        	teamSpawnCommand.execute(player, subargs);
 	    } else {
         	player.sendMessage("Usage: /minepvp info|buy|upgrade");
         }

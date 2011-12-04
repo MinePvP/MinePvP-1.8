@@ -34,12 +34,19 @@ public class BuyCommand {
 				
 			} else if ( arg[0].equalsIgnoreCase("alertsystem") ) {
 				
-				player.sendMessage(ChatColor.RED + "Command Buy Alertsystem");
-				
 				if ( plugin.getClanManager().buyUpgradeAlertSystem(player) ) {					
 					player.sendMessage("Alarmanlage wurde gekauft!");
 				} else {
 					player.sendMessage("Alarmanlage wurde nicht gekauft!");
+				}
+				
+				
+			} else if ( arg[0].equalsIgnoreCase("teamspawn") ) {
+				
+				if ( plugin.getClanManager().buyUpgradeTeamSpawn(player) ) {					
+					player.sendMessage("TeamSpawn wurde gekauft!");
+				} else {
+					player.sendMessage("TeamSpawn wurde nicht gekauft!");
 				}
 				
 				

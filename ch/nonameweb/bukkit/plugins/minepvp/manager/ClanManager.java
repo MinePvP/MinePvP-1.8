@@ -747,4 +747,28 @@ public class ClanManager {
 		return kostenList;
 	}
 	
+	public Boolean buyUpgradeTeamSpawn( Player player ) {
+		
+		Clan clan = getClanByPlayer(player);
+		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.TeamSpawn.Kosten");
+		
+		if ( clan != null ) {
+			
+			Integer points = clan.getPoints();
+			Integer rest = points - kosten;
+			
+			if ( rest >= 0 ) {
+				clan.setTeamSpawn(true);
+				
+				clan.save(plugin.getConfig());
+				
+				return true;
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	
 }
