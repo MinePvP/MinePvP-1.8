@@ -771,6 +771,8 @@ public class ClanManager {
 					return true;
 				}
 				
+			} else {
+				player.sendMessage("ClanSpawn schon vorhanden.");
 			}
 			
 		}
@@ -803,6 +805,8 @@ public class ClanManager {
 					clan.save(plugin.getConfig());
 					
 					return true;
+				} else {
+					player.sendMessage("Moat schon vorhanden.");
 				}
 			}
 			

@@ -185,12 +185,8 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
-		
-		player.sendMessage("Debug onPlayerTeleport 1");
-		
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
 		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
-			player.sendMessage("Debug onPlayerTeleport 2");
 			plugin.getClanManager().resetFlag(player);
 		}
 		
