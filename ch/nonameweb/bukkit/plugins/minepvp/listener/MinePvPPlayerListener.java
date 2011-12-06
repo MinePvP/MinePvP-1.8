@@ -82,27 +82,34 @@ public class MinePvPPlayerListener extends PlayerListener{
 			
 			if ( clanTo != null ) {
 				
-				// AlarmSystem
-				if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
-					
-					if ( clanTo.getAlertsystem() == 1 ) {
+				
+				// Ist mindestens Spieler Online vom Clan
+				if ( clanManager.isMinPlayerOnline(clanTo) ) {
+					// AlarmSystem
+					if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
 						
-						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
-						
-					} else if ( clanTo.getAlertsystem() == 2 ) {
-						
-						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
-						
-					} else if ( clanTo.getAlertsystem() == 3 ) {
-						
-						clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+						if ( clanTo.getAlertsystem() == 1 ) {
+							
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
+							
+						} else if ( clanTo.getAlertsystem() == 2 ) {
+							
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+							
+						} else if ( clanTo.getAlertsystem() == 3 ) {
+							
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+							
+						}
 						
 					}
 					
+					player.sendMessage("Du betrittst das gebiebt von " + clanTo.getName() + "!" );
+				} else {
+					player.teleport( event.getFrom() );
 				}
 				
 				
-				player.sendMessage("Du betrittst das gebiebt von " + clanTo.getName() + "!" );
 			}
 			
 		} else {
