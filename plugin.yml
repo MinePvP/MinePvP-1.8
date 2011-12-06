@@ -1,6 +1,6 @@
 name: MinePvP
 main: ch.nonameweb.bukkit.plugins.minepvp.MinePvP
-version: 0.1
+version: 0.3
 commands:
   minepvp:
     description: Main Command

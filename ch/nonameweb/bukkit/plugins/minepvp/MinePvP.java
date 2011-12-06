@@ -100,6 +100,7 @@ public class MinePvP extends JavaPlugin {
 		
 		// Sonstiges
 		getConfig().addDefault("Global.Settings.Land.DMGonBlockDMG", 2);
+		getConfig().addDefault("Global.Settings.Moat.DMG", 0.2);
 		
 		// Land Kaufen Upgraden Kosten
 	    getConfig().addDefault("Global.Settings.Land.ErsteStufe.Radius", 20);
@@ -109,7 +110,10 @@ public class MinePvP extends JavaPlugin {
 	    getConfig().addDefault("Global.Settings.Land.MinAbstandZwischenClans", 1000);
 	    
 	    // TeamSpawn Kosten
-	    getConfig().addDefault("Global.Settings.Land.TeamSpawn.Kosten", 40);
+	    getConfig().addDefault("Global.Settings.Land.ClanSpawn.Kosten", 40);
+	    
+	    // Wassergraben
+	    getConfig().addDefault("Global.Settings.Land.Moat.Kosten", 100);
 	    
 	    // Stufen
 	    String[] listStufenRadius = {"30", "40", "50", "60", "70", "80", "90", "100", "110", "120"};
@@ -138,6 +142,7 @@ public class MinePvP extends JavaPlugin {
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_MOVE, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_TELEPORT, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Lowest, this);
+        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_KICK, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_BUCKET_EMPTY, playerListener, Priority.Lowest, this);
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Priority.Lowest, this);
         

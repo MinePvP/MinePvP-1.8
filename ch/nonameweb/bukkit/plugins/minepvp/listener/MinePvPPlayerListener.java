@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -82,7 +83,6 @@ public class MinePvPPlayerListener extends PlayerListener{
 			
 			if ( clanTo != null ) {
 				
-				
 				// Ist mindestens Spieler Online vom Clan
 				if ( clanManager.isMinPlayerOnline(clanTo) ) {
 					// AlarmSystem
@@ -107,15 +107,33 @@ public class MinePvPPlayerListener extends PlayerListener{
 					player.sendMessage("Du betrittst das gebiebt von " + clanTo.getName() + "!" );
 				} else {
 					player.teleport( event.getFrom() );
+					player.sendMessage("Es ist kein Spieler aus dem Clan " + clanTo.getName() + " Online");
 				}
-				
-				
+					
 			}
 			
 		} else {
 			
 			if ( clanTo == null ) {
 				player.sendMessage("Du verlässt das gebiet von " + clanFrom.getName() + "!");
+			} else {
+				
+				// Wenn in Wasser von einem feindlichen Clan kriegt er schaden // moat / wassergraben
+				if ( player.getLocation().getBlock().isLiquid() ) {
+					
+					// Wenn der Spieler sich in einem Feindlichen Clangebiet bewegt
+					if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) != true && clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true  ) {
+						
+						// Wenn der Clan einen Wassergraben hat
+						if ( clanFrom.getMoat() == true ) {
+							clanManager.playerMoatDamage(player);
+						}
+						
+					}
+					
+				}
+				
+				
 			}
 			
 		}
@@ -140,6 +158,22 @@ public class MinePvPPlayerListener extends PlayerListener{
 		
 	}
 	
+	public void onPlayerKick( PlayerKickEvent event) {
+		
+		Player player = event.getPlayer();
+		
+		if ( player == null ) {
+			return;
+		}
+		
+		// Wenn jemand noch eine Flagge hat wird diese Resettet
+		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
+			plugin.getClanManager().resetFlag(player);
+		}
+		
+		
+	}
+	
 	/**
 	 * 
 	 */
@@ -151,8 +185,12 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
+		
+		player.sendMessage("Debug onPlayerTeleport 1");
+		
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
 		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
+			player.sendMessage("Debug onPlayerTeleport 2");
 			plugin.getClanManager().resetFlag(player);
 		}
 		
@@ -217,16 +255,14 @@ public class MinePvPPlayerListener extends PlayerListener{
 					// Ist er im gleichen Clan wie das Land?
 					if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
 						
-						
-						
 					} else {
 						
 						// Chests and Furnances
 						if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {
+							clanManager.playerDamage(player);
 							event.setCancelled(true);
 						}					
 						
-						clanManager.playerDamage(player);
 					}
 					
 				} else {

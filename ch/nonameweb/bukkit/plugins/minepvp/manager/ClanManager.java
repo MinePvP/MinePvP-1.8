@@ -541,6 +541,7 @@ public class ClanManager {
 				
 				if ( player.getName().equalsIgnoreCase( clan.getPlayerHasFlag().getName() ) ) {
 					
+					player.getInventory().setHelmet( null );
 					clan.resetPlayerHasFlag();
 					plugin.getServer().getWorld("world").getBlockAt( clan.getBaseLocation() ).setTypeId(35);
 					
@@ -598,6 +599,10 @@ public class ClanManager {
 	public void playerDamage( Player player ) {
 		player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );
 		player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") ) );	
+	}
+	
+	public void playerMoatDamage( Player player ) {
+		player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Moat.DMG") ) );	
 	}
 	
 	public Boolean hasPlayerAClan( Player player ) {
@@ -746,22 +751,26 @@ public class ClanManager {
 		return kostenList;
 	}
 	
-	public Boolean buyUpgradeTeamSpawn( Player player ) {
+	public Boolean buyUpgradeClanSpawn( Player player ) {
 		
 		Clan clan = getClanByPlayer(player);
-		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.TeamSpawn.Kosten");
+		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.ClanSpawn.Kosten");
 		
 		if ( clan != null ) {
 			
-			Integer points = clan.getPoints();
-			Integer rest = points - kosten;
+			if ( clan.getClanSpawn() == false ) {
 			
-			if ( rest >= 0 ) {
-				clan.setClanSpawn(true);
+				Integer points = clan.getPoints();
+				Integer rest = points - kosten;
 				
-				clan.save(plugin.getConfig());
+				if ( rest >= 0 ) {
+					clan.setClanSpawn(true);
+					
+					clan.save(plugin.getConfig());
+					
+					return true;
+				}
 				
-				return true;
 			}
 			
 		}
@@ -777,5 +786,29 @@ public class ClanManager {
 		this.clans = clans;
 	}
 	
+	public Boolean buyUpgradeMoat( Player player ) {
+		
+		Clan clan = getClanByPlayer(player);
+		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.Moat.Kosten");
+		
+		if ( clan != null ) {
+			
+			if ( clan.getMoat() == false ) {
+				Integer points = clan.getPoints();
+				Integer rest = points - kosten;
+				
+				if ( rest >= 0 ) {
+					clan.setMoat(true);
+					
+					clan.save(plugin.getConfig());
+					
+					return true;
+				}
+			}
+			
+		}
+		
+		return false;
+	}
 	
 }

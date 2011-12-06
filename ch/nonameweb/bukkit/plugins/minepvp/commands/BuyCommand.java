@@ -42,15 +42,24 @@ public class BuyCommand {
 				
 			} else if ( arg[0].equalsIgnoreCase("clanspawn") ) {
 				
-				if ( plugin.getClanManager().buyUpgradeTeamSpawn(player) ) {					
+				if ( plugin.getClanManager().buyUpgradeClanSpawn(player) ) {					
 					player.sendMessage("ClanSpawn wurde gekauft!");
 				} else {
 					player.sendMessage("ClanSpawn wurde nicht gekauft!");
 				}
 				
 				
+			} else if ( arg[0].equalsIgnoreCase("moat") ) {
+				
+				if ( plugin.getClanManager().buyUpgradeMoat(player) ) {					
+					player.sendMessage("Wassergraben wurde gekauft!");
+				} else {
+					player.sendMessage("Wassergraben wurde nicht gekauft!");
+				}
+				
+				
 			} else {
-				player.sendMessage("Usage : /minepvp buy land|alertsystem|clanspawn");
+				player.sendMessage("Usage : /minepvp buy land|alertsystem|clanspawn|moat");
 			}
 			
 		}

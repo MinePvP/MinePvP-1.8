@@ -49,11 +49,6 @@ public class MinePvPBlockListener extends BlockListener{
 						
 						// hat der Spieler eine Flagge?
 						if ( clanManager.hasPlayerAFlag(player) ) {
-							
-							// Flag wegnehmen TODO Helm zurŸcksetzen
-							
-							//player.getInventory().getHelmet().setTypeId(0);
-							
 							// Flag von Clan wieder herstellen
 							clanManager.resetFlag(player);
 							
@@ -86,14 +81,15 @@ public class MinePvPBlockListener extends BlockListener{
 						
 						// ŸberprŸfen ob die mindest anzahl spieler des gegner teams online sind
 						if ( clanManager.isMinPlayerOnline( clanLand ) ) {
+							
 							// Flag Block Entfernen
 							block.setTypeId(0);
 							
 							// Helm Item wird im Inventar verstaut
-							if ( player.getInventory().getHelmet() != null ) {
+							if ( player.getInventory().getHelmet().getTypeId() > 0 ) {
 								player.getInventory().addItem( player.getInventory().getHelmet() );
 							}
-
+							
 							// Flagge wird als Helm gesetzt
 							ItemStack itemStack = new ItemStack(35);
 							player.getInventory().setHelmet( itemStack );
@@ -111,8 +107,6 @@ public class MinePvPBlockListener extends BlockListener{
 							event.setCancelled(true);
 							
 						}
-						
-					} else {
 						
 					}
 					

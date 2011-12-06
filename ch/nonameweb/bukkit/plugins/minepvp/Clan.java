@@ -20,6 +20,9 @@ public class Clan {
 	// Alertsystem
 	private Integer alertsystem = null;
 	
+	// Wassergraben
+	private Boolean moat = false;
+	
 	// Punkte
 	private Integer points = null;
 	
@@ -85,6 +88,9 @@ public class Clan {
 		
 		// TeamSpawn
 		setClanSpawn( config.getBoolean("Clans." + getName() + ".ClanSpawn", false) );
+		
+		// Wassergraben
+		setMoat( config.getBoolean("Clans." + getName() + ".Moat", false) );
 	}
 	
 	/**
@@ -111,6 +117,9 @@ public class Clan {
 		
 		// TeamSpawn
 		config.set("Clans." + getName() + ".ClanSpawn", getClanSpawn());
+	
+		// Wassergraben
+		config.set("Clans." + getName() + ".Moat", getMoat());
 	}
 	
 	/**
@@ -307,6 +316,14 @@ public class Clan {
 
 	public void setFlags(Integer flags) {
 		this.flags = flags;
+	}
+
+	public Boolean getMoat() {
+		return moat;
+	}
+
+	public void setMoat(Boolean moat) {
+		this.moat = moat;
 	}
 	
 	
