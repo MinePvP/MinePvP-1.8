@@ -757,7 +757,7 @@ public class ClanManager {
 			Integer rest = points - kosten;
 			
 			if ( rest >= 0 ) {
-				clan.setTeamSpawn(true);
+				clan.setClanSpawn(true);
 				
 				clan.save(plugin.getConfig());
 				

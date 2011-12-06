@@ -28,7 +28,7 @@ public class Clan {
 	private Integer flags = null;
 	
 	// TeamSpawn
-	private Boolean teamSpawn = false;
+	private Boolean clanSpawn = false;
 	
 	/**
 	 * 
@@ -84,7 +84,7 @@ public class Clan {
 		setFlags( config.getInt("Clans." + getName() + ".Flaggen", 0) );
 		
 		// TeamSpawn
-		setTeamSpawn( config.getBoolean("Clans." + getName() + ".TeamSpawn", false) );
+		setClanSpawn( config.getBoolean("Clans." + getName() + ".ClanSpawn", false) );
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public class Clan {
 		config.set("Clans." + getName() + ".Flaggen", getFlags());
 		
 		// TeamSpawn
-		config.set("Clans." + getName() + ".TeamSpawn", false);
+		config.set("Clans." + getName() + ".ClanSpawn", getClanSpawn());
 	}
 	
 	/**
@@ -293,12 +293,12 @@ public class Clan {
 		this.alertsystem = this.alertsystem + alertsystem;
 	}
 
-	public Boolean getTeamSpawn() {
-		return teamSpawn;
+	public Boolean getClanSpawn() {
+		return clanSpawn;
 	}
 
-	public void setTeamSpawn(Boolean teamSpawn) {
-		this.teamSpawn = teamSpawn;
+	public void setClanSpawn(Boolean clanSpawn) {
+		this.clanSpawn = clanSpawn;
 	}
 
 	public Integer getFlags() {

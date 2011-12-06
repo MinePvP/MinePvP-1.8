@@ -1,25 +1,25 @@
 package ch.nonameweb.bukkit.plugins.minepvp.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
-
 public class InfoCommand {
-
-	MinePvP plugin;
 	
 	/**
 	 * 
 	 */
 	public InfoCommand() {
-		plugin = MinePvP.getInstance();
+
 	}
 	
 	public void execute( Player player, String[] arg ) {
 		
-		player.sendMessage("----------------------------------------");
-		player.sendMessage("INFO");
-		player.sendMessage("----------------------------------------");
+		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
+		player.sendMessage(ChatColor.GREEN + "                            INFO");
+		player.sendMessage(ChatColor.WHITE + "Entwickler : " + ChatColor.GRAY + "surtic86");
+		player.sendMessage(ChatColor.WHITE + "Version : 0.3");
+		player.sendMessage(ChatColor.WHITE + "Webseite : " + ChatColor.GRAY + "http://www.minepvp.ath.cx");
+		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		
 	}
 	

@@ -5,14 +5,14 @@ import org.bukkit.entity.Player;
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 
-public class TeamSpawnCommand {
+public class ClanSpawnCommand {
 
 	MinePvP plugin;
 	
 	/**
 	 * 
 	 */
-	public TeamSpawnCommand() {
+	public ClanSpawnCommand() {
 		plugin = MinePvP.getInstance();
 	}
 	
@@ -22,10 +22,10 @@ public class TeamSpawnCommand {
 		
 		if ( clan != null ) {
 			
-			if ( clan.getTeamSpawn() == true ) {
+			if ( clan.getClanSpawn() == true ) {
 				player.teleport( clan.getBaseLocation() );
 			} else {
-				player.sendMessage("Euer Clan besitzt noch keinen TeamSpawn!");
+				player.sendMessage("Euer Clan besitzt noch keinen ClanSpawn!");
 			}			
 			
 		}

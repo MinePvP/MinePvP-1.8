@@ -41,17 +41,17 @@ public class BuyCommand {
 				}
 				
 				
-			} else if ( arg[0].equalsIgnoreCase("teamspawn") ) {
+			} else if ( arg[0].equalsIgnoreCase("clanspawn") ) {
 				
 				if ( plugin.getClanManager().buyUpgradeTeamSpawn(player) ) {					
-					player.sendMessage("TeamSpawn wurde gekauft!");
+					player.sendMessage("ClanSpawn wurde gekauft!");
 				} else {
-					player.sendMessage("TeamSpawn wurde nicht gekauft!");
+					player.sendMessage("ClanSpawn wurde nicht gekauft!");
 				}
 				
 				
 			} else {
-				player.sendMessage("Usage : /minepvp buy land|alertsystem|teamspawn");
+				player.sendMessage("Usage : /minepvp buy land|alertsystem|clanspawn");
 			}
 			
 		}
