@@ -4,7 +4,6 @@ import net.sacredlabyrinth.phaed.simpleclans.Helper;
 
 import org.bukkit.entity.Player;
 
-import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.HelpCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
@@ -14,8 +13,6 @@ import ch.nonameweb.bukkit.plugins.minepvp.commands.ClanSpawnCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
 
 public class CommandManager {
-
-	private MinePvP plugin;
 	
 	// Commands	
 	private InfoCommand infoCommand;
@@ -29,9 +26,7 @@ public class CommandManager {
 	/**
 	 * 
 	 */
-	public CommandManager() {
-		this.plugin = MinePvP.getInstance();
-		
+	public CommandManager() {		
 		infoCommand = new InfoCommand();
 		buyCommand = new BuyCommand();
 		upgradeCommand = new UpgradeCommand();

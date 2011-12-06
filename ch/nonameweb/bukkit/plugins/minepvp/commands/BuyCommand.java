@@ -3,7 +3,6 @@ package ch.nonameweb.bukkit.plugins.minepvp.commands;
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;

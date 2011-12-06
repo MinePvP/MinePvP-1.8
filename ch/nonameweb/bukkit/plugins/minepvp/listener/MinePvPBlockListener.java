@@ -1,11 +1,8 @@
 package ch.nonameweb.bukkit.plugins.minepvp.listener;
 
-import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
-
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -19,16 +16,13 @@ public class MinePvPBlockListener extends BlockListener{
 
 	private MinePvP plugin;
 	private ClanManager clanManager;
-	private SimpleClans simpleClans;
 	
 	/**
 	 * 
 	 */
 	public MinePvPBlockListener() {
 		plugin = MinePvP.getInstance();
-		clanManager = plugin.getClanManager();
-		simpleClans = plugin.getSimpleClans();
-		
+		clanManager = plugin.getClanManager();		
 	}	
 	
 	/**
@@ -80,11 +74,8 @@ public class MinePvPBlockListener extends BlockListener{
 						// TODO Protection von den anderen Blšcken rund um die Flagge
 						
 						if ( clanManager.isBlockAroundAFlag(block) ) {
-							
 							event.setCancelled(true);
-							
 						}
-						
 						
 					}
 					
@@ -129,8 +120,6 @@ public class MinePvPBlockListener extends BlockListener{
 					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
 						event.setCancelled(true);
 					}
-					
-					
 									
 				}
 				
@@ -147,10 +136,8 @@ public class MinePvPBlockListener extends BlockListener{
 	public void onBlockBreak( BlockBreakEvent event ) {
 		
 		Player player = event.getPlayer();
-		Block block = event.getBlock();
 		
 		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
-		
 		
 		// Ist es in einen gebit von einem Clan?
 		if ( clanLand != null ) {
@@ -159,9 +146,7 @@ public class MinePvPBlockListener extends BlockListener{
 			if ( clanManager.hasPlayerAClan(player) ) {
 				
 				// Ist er im gleichen Clan wie das Land?
-				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
-					
-					
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {	
 					
 				} else {
 					clanManager.playerDamage(player);
@@ -181,7 +166,6 @@ public class MinePvPBlockListener extends BlockListener{
 	public void onBlockPlace( BlockPlaceEvent event ) {
 		
 		Player player = event.getPlayer();
-		Block block = event.getBlock();
 		
 		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
 		
@@ -192,9 +176,7 @@ public class MinePvPBlockListener extends BlockListener{
 			if ( clanManager.hasPlayerAClan(player) ) {
 				
 				// Ist er im gleichen Clan wie das Land?
-				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
-					
-					
+				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {	
 					
 				} else {				
 					clanManager.playerDamage(player);
@@ -205,10 +187,8 @@ public class MinePvPBlockListener extends BlockListener{
 			}
 			
 		} else {
-			
+		
 		}
-		
-		
 		
 	}
 	

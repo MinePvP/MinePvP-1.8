@@ -1,7 +1,6 @@
 package ch.nonameweb.bukkit.plugins.minepvp;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
@@ -35,9 +34,6 @@ public class MinePvP extends JavaPlugin {
 	private MinePvPBlockListener blockListener;
 	private MinePvPEntityListener entityListener;
 	
-	// Logger
-	private Logger logger = Logger.getLogger("Minecraft");
-	
 	// Debug
 	private Boolean debug;
 	
@@ -45,7 +41,7 @@ public class MinePvP extends JavaPlugin {
 	public void onEnable() {
 		
 		// Plugin Instanz speichern
-		this.plugin = this;
+		plugin = this;
 		
 		// SimpleClans Plugin laden
 		Plugin plug = getServer().getPluginManager().getPlugin("SimpleClans");
