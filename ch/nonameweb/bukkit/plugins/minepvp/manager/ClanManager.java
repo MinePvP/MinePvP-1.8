@@ -209,19 +209,24 @@ public class ClanManager {
 		
 		Integer minDistance = plugin.getConfig().getInt("Global.Settings.Land.MinAbstandZwischenClans");
 		
-		if ( clans != null ) {
-			for ( Clan clan : clans ) {
-				
-				Location clanLocation = new Location(plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
-				
-				// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
-				// TODO Checken ob das wirklich richtig berechnet wird!!!
-				if ( clanLocation.distance( player.getLocation() ) < minDistance ) {
-					player.sendMessage("Du bist zu nahe am Clan " + clan.getName() + "!");
-					return false;
+		// Distanz zum Spawn
+		if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > minDistance ) {
+		
+			if ( clans != null ) {
+				for ( Clan clan : clans ) {
+					
+					Location clanLocation = new Location(plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
+					
+					// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
+					// TODO Checken ob das wirklich richtig berechnet wird!!!
+					if ( clanLocation.distance( player.getLocation() ) > minDistance ) {
+						player.sendMessage("Du bist zu nahe am Clan " + clan.getName() + "!");
+						return false;
+					}
+					
 				}
-				
 			}
+			
 		}
 		
 		return true;
