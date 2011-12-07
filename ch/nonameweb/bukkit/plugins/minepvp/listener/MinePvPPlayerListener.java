@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -188,6 +189,33 @@ public class MinePvPPlayerListener extends PlayerListener{
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
 		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
 			plugin.getClanManager().resetFlag(player);
+		}
+		
+	}
+	
+	public void onPlayerJoin ( PlayerJoinEvent event ) {
+		
+		Player player = event.getPlayer();
+		
+		Clan playerClan = clanManager.getClanByPlayer(player);
+		Clan clanLand = clanManager.getClanByLocation( player.getLocation() );
+		
+		if ( clanLand != null ) {
+			
+			if ( playerClan.getName().equalsIgnoreCase( clanLand.getName() ) ) {
+								
+			} else {
+				
+				// Wenn der Clan einen Spawn hat dahin sonst zum World Spawn
+				if ( playerClan.getClanSpawn() ) {
+					player.teleport( playerClan.getBaseLocation() );
+				} else {
+					player.teleport( plugin.getServer().getWorld("world").getSpawnLocation() );
+				}
+				
+				player.sendMessage("Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
+			}
+			
 		}
 		
 	}
