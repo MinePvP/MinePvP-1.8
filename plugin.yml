@@ -4,4 +4,3 @@ version: 0.3
 commands:
   minepvp:
     description: Main Command
-    usage: /<command> help 
