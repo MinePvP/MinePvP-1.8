@@ -2,6 +2,7 @@ package ch.nonameweb.bukkit.plugins.minepvp.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
@@ -103,19 +104,25 @@ public class ClanManager {
 	 */
 	public void loadClans() {
 		
-		@SuppressWarnings("unchecked")
-		List<String> clansList = plugin.getConfig().getList("Clans.List");
+		/*
+		 * Falls Clans schon befüllt ist wird diese 
+		 * zuerst gespeichert und dann neu erstellt
+		 */
+		if ( clans != null ) {
+			saveClans();	
+		}
+		
+		Set<String> clansList = null;
+		
+		try {
+			clansList = plugin.getConfig().getConfigurationSection("Clans").getKeys(false);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		
 		if ( clansList != null ) {
-			
-			/*
-			 * Falls Clans schon befüllt ist wird diese 
-			 * zuerst gespeichert und dann neu erstellt
-			 */
-			if ( clans != null ) {
-				saveClans();	
-			}
-			
+
 			clans = new ArrayList<Clan>();
 			
 			// Alle Clans einzeln laden
@@ -144,8 +151,13 @@ public class ClanManager {
 	public void reloadClans() {
 		
 		
-		@SuppressWarnings("unchecked")
-		List<String> clansList = plugin.getConfig().getList("Clans.List");
+		Set<String> clansList = null;
+		
+		try {
+			clansList = plugin.getConfig().getConfigurationSection("Clans").getKeys(false);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		if ( clansList != null ) {
 			
@@ -193,8 +205,6 @@ public class ClanManager {
 				clanNameList.add(clan.getName());
 			}
 			
-			plugin.getConfig().set("Clans.List", clanNameList);
-			
 		}
 		
 		plugin.saveConfig();
@@ -212,24 +222,33 @@ public class ClanManager {
 		// Distanz zum Spawn
 		if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > minDistance ) {
 		
-			if ( clans != null ) {
+			if ( clans.size() >= 1 ) {
+				
 				for ( Clan clan : clans ) {
 					
-					Location clanLocation = new Location(plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
+					Location clanLocation = new Location( plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
+					
+					player.sendMessage("Debug checkClanBaseDistance 5.1");
 					
 					// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
 					// TODO Checken ob das wirklich richtig berechnet wird!!!
 					if ( clanLocation.distance( player.getLocation() ) > minDistance ) {
+						return true;
+					} else {
 						player.sendMessage("Du bist zu nahe am Clan " + clan.getName() + "!");
-						return false;
 					}
 					
 				}
+			} else {
+				return true;
+				
 			}
 			
+		} else {
+			player.sendMessage("Du bist zu nahe am Spawn!");
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -310,6 +329,8 @@ public class ClanManager {
 			clan.setPoints( rest );
 			clan.setStufe( clan.getStufe() + 1 );
 			
+			clan.setRadius( getRadiusList().get( (clan.getStufe() - 1) ) );
+			
 			saveClans();
 			
 			return true;
@@ -382,14 +403,21 @@ public class ClanManager {
 	 */
 	public Clan getClanByPlayer( Player player ) {
 		
-		String clanName = plugin.getSimpleClans().getClanManager().getClanByPlayerName(player.getName()).getName();
+		String clanName = null;
 		
-		for ( Clan clan : clans ) {
+		if ( plugin.getSimpleClans().getClanManager().getClanByPlayerName( player.getName()) != null ) {
+			clanName = plugin.getSimpleClans().getClanManager().getClanByPlayerName(player.getName()).getName();
 			
-			if ( clan.getName().equalsIgnoreCase(clanName) ) {				
-				return clan;
+			
+			for ( Clan clan : clans ) {
+				
+				if ( clan.getName().equalsIgnoreCase(clanName) ) {				
+					return clan;
+				}
 			}
 		}
+		
+		
 		
 		return null;
 		
@@ -567,12 +595,16 @@ public class ClanManager {
 		
 		for ( Player player : players ) {
 			
-			if ( simpleClans.getClanManager().getClanByPlayerName( player.getName() ).getName().equalsIgnoreCase( clan.getName() ) ) {
-				
-				onlinePlayers++;
-				
-				if ( minPlayers <= onlinePlayers ) {
-					return true;
+			if ( simpleClans.getClanManager().getClanByPlayerName( player.getName() ) != null ) {
+			
+				if ( simpleClans.getClanManager().getClanByPlayerName( player.getName() ).getName().equalsIgnoreCase( clan.getName() ) ) {
+					
+					onlinePlayers++;
+					
+					if ( minPlayers <= onlinePlayers ) {
+						return true;
+					}
+					
 				}
 				
 			}
@@ -810,9 +842,9 @@ public class ClanManager {
 					clan.save(plugin.getConfig());
 					
 					return true;
-				} else {
-					player.sendMessage("Moat schon vorhanden.");
 				}
+			} else {
+				player.sendMessage("Moat schon vorhanden.");
 			}
 			
 		}
