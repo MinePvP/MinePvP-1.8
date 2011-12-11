@@ -624,11 +624,14 @@ public class ClanManager {
 		
 		for ( ClanPlayer player : clanPlayers ) {
 			
-			if ( player.getClan().getName().equalsIgnoreCase(clan.getName()) ) {
-				
-				plugin.getServer().getPlayer( player.getName() ).sendMessage(message);
-				
+			if ( player.getClan() != null ) {
+				if ( player.getClan().getName().equalsIgnoreCase( clan.getName() ) ) {
+					
+					plugin.getServer().getPlayer( player.getName() ).sendMessage(message);
+					
+				}
 			}
+			
 		}
 		
 	}

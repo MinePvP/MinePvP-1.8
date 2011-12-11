@@ -41,6 +41,8 @@ public class MinePvPBlockListener extends BlockListener{
 			// Hat der Spieler einen Clan?
 			if ( clanManager.hasPlayerAClan(player) ) {
 				
+				player.sendMessage("Spieler hat einen Clan");
+				
 				// Ist er im gleichen Clan wie das Land?
 				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
 					
@@ -119,6 +121,23 @@ public class MinePvPBlockListener extends BlockListener{
 				
 			} else {
 				
+				
+				if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
+					// SPieler hat keinen Clan
+					player.sendMessage("Du kannst die Flagge nicht nehmen, da du in keinem Clan bist.");
+					event.setCancelled(true);
+				} else {
+				
+					if ( clanManager.isBlockAroundAFlag(block) ) {
+						event.setCancelled(true);
+					}
+					
+					// Protecten von Chests und Furnance
+					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
+						event.setCancelled(true);
+					}
+					
+				}
 			}
 			
 		} else {
