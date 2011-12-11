@@ -62,6 +62,8 @@ public class BuyCommand {
 				player.sendMessage("Usage : /minepvp buy land|alertsystem|clanspawn|moat");
 			}
 			
+		} else {
+			player.sendMessage("Nur eine Leader kann dies tun!");
 		}
 		
 	}

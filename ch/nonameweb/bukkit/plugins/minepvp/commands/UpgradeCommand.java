@@ -41,6 +41,8 @@ public class UpgradeCommand {
 				player.sendMessage("Usage : /minepvp upgrade land");
 			}
 			
+		} else {
+			player.sendMessage("Nur eine Leader kann dies tun!");
 		}
 		
 	}
