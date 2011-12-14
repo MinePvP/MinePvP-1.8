@@ -20,6 +20,7 @@ public class HelpCommand {
 		
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		player.sendMessage(ChatColor.GREEN + "                            Hilfe");
+		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		player.sendMessage(ChatColor.WHITE + "/minepvp info " + ChatColor.GRAY + "// Giebt auskunft Ÿber das Plugin");
 		player.sendMessage(ChatColor.WHITE + "/minepvp help " + ChatColor.GRAY + "// Giebt auskunft Ÿber die verschiedenen Befehle");
 		player.sendMessage(ChatColor.WHITE + "/minepvp reload " + ChatColor.GRAY + "// Reloadet die Config von MinePvP");

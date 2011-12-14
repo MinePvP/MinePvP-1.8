@@ -124,10 +124,10 @@ public class MinePvPPlayerListener extends PlayerListener{
 						
 					}
 					
-					player.sendMessage("Du betrittst das gebiebt von " + clanTo.getName() + "!" );
+					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiebt von " + clanTo.getName() + "." );
 				} else {
 					player.teleport( event.getFrom() );
-					player.sendMessage("Es ist kein Spieler aus dem Clan " + clanTo.getName() + " Online");
+					player.sendMessage(ChatColor.GOLD + "Es ist kein Spieler aus dem Clan " + clanTo.getName() + " Online.");
 				}
 					
 			}
@@ -135,7 +135,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 		} else {
 			
 			if ( clanTo == null ) {
-				player.sendMessage("Du verlässt das gebiet von " + clanFrom.getName() + "!");
+				player.sendMessage(ChatColor.GOLD + "Du verlässt das gebiet von " + clanFrom.getName() + ".");
 			} else {
 				
 				// Wenn in Wasser von einem feindlichen Clan kriegt er schaden // moat / wassergraben
@@ -233,13 +233,13 @@ public class MinePvPPlayerListener extends PlayerListener{
 						player.teleport( plugin.getServer().getWorld("world").getSpawnLocation() );
 					}
 					
-					player.sendMessage("Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
+					player.sendMessage(ChatColor.GOLD + "Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
 				}
 			} else {
 				
 				player.teleport( plugin.getServer().getWorld("world").getSpawnLocation() );
 				
-				player.sendMessage("Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
+				player.sendMessage(ChatColor.GOLD + "Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
 				
 			}
 			
@@ -332,7 +332,6 @@ public class MinePvPPlayerListener extends PlayerListener{
 						event.setCancelled(true);
 					}	
 					
-					clanManager.playerDamage(player);			
 				}
 				
 			} else {

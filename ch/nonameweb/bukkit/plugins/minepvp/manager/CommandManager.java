@@ -2,6 +2,7 @@ package ch.nonameweb.bukkit.plugins.minepvp.manager;
 
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
@@ -62,7 +63,7 @@ public class CommandManager {
 	    } else if ( subcommand.equalsIgnoreCase("stats") ) {
         	statsCommand.execute(player, subargs);
 	    } else {
-        	player.sendMessage("Usage: /minepvp info|buy|upgrade");
+        	player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
         }
 			
 		

@@ -1,5 +1,6 @@
 package ch.nonameweb.bukkit.plugins.minepvp.listener;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -41,8 +42,6 @@ public class MinePvPBlockListener extends BlockListener{
 			// Hat der Spieler einen Clan?
 			if ( clanManager.hasPlayerAClan(player) ) {
 				
-				player.sendMessage("Spieler hat einen Clan");
-				
 				// Ist er im gleichen Clan wie das Land?
 				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {
 					
@@ -57,10 +56,10 @@ public class MinePvPBlockListener extends BlockListener{
 							// Punkte geben
 							clanManager.addPoints(player);
 							
-							player.sendMessage("Du hast die Flagge erfolgreich abgegben!");
+							player.sendMessage(ChatColor.GREEN + "Du hast die Flagge erfolgreich abgegben.");
 							
 							// Das gegnerische Team Informieren das Ihre Flagge erfolgreich abgegebn wurde,
-							clanManager.sendClanMessage(clanLand, "Der Spieler " + player.getName() + " konnte erfolgreich erure Flagge zur Clan Base bringen!");
+							clanManager.sendClanMessage(clanLand, ChatColor.GOLD + "Der Spieler " + player.getName() + " konnte erfolgreich die Flagge abgeben");
 						} else {
 							// Protection der Flagge fals Spieler keine Flagge hat.
 							event.setCancelled(true);
@@ -69,7 +68,6 @@ public class MinePvPBlockListener extends BlockListener{
 					} else {
 						
 						// TODO Protection von den anderen Blšcken rund um die Flagge
-						
 						if ( clanManager.isBlockAroundAFlag(block) ) {
 							event.setCancelled(true);
 						}
@@ -98,13 +96,13 @@ public class MinePvPBlockListener extends BlockListener{
 							
 							clanManager.setPlayerHasFlag(player, clanLand);
 							
-							player.sendMessage("Du hast die Flagge von " + clanLand.getName() + " gestohlen!");
+							player.sendMessage(ChatColor.GREEN + "Du hast die Flagge von " + clanLand.getName() + " gestohlen.");
 							
 							// Das gegnerrische Team benachrichtigen das Ihre Flagge erbeutet wurde
-							clanManager.sendClanMessage(clanLand, "Die Flagge wurde von " + player.getName() + " erbeutet!");
+							clanManager.sendClanMessage(clanLand, ChatColor.GOLD + "Die Flagge wurde von " + player.getName() + " erbeutet.");
 						} else {
 							
-							player.sendMessage("Es sind zu wenige Spieler aus dem gegnerischem Team online!");
+							player.sendMessage(ChatColor.GOLD + "Es sind zu wenige Spieler aus dem gegnerischem Team online.");
 							
 							event.setCancelled(true);
 							
@@ -124,7 +122,7 @@ public class MinePvPBlockListener extends BlockListener{
 				
 				if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
 					// SPieler hat keinen Clan
-					player.sendMessage("Du kannst die Flagge nicht nehmen, da du in keinem Clan bist.");
+					player.sendMessage(ChatColor.GOLD + "Du kannst die Flagge nicht nehmen, da du in keinem Clan bist.");
 					event.setCancelled(true);
 				} else {
 				

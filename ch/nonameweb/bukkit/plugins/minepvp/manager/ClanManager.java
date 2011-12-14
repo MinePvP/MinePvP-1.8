@@ -1,6 +1,8 @@
 package ch.nonameweb.bukkit.plugins.minepvp.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -65,11 +67,11 @@ public class ClanManager {
 				}
 					
 			} else {
-				player.sendMessage("Ihr mŸsst mindestens " + plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.MinSpieler") + "Spieler sein um Land zu kaufen!");
+				player.sendMessage(ChatColor.RED + "Ihr mŸsst mindestens " + plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.MinSpieler") + " Spieler sein um Land zu kaufen!");
 			}
 			
 		} else {
-			player.sendMessage("Bitte benutz die Upgrade Funktion um das Land zu erweitern!");
+			player.sendMessage(ChatColor.RED + "Um das Land zu erweitern /minepvp upgrade land");
 		}
 		
 		return false;
@@ -88,10 +90,7 @@ public class ClanManager {
 		if (  clan != null ) {
 			
 			if ( getClanPointsForUpgrade(clan, player) ) {
-				player.sendMessage("Upgrade wurde gekauft!");
 				return true;
-			} else {
-				player.sendMessage("Upgrade konnte nicht gekauft werden zu wenig Punkte!");
 			}
 			
 		}
@@ -227,25 +226,22 @@ public class ClanManager {
 				for ( Clan clan : clans ) {
 					
 					Location clanLocation = new Location( plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
-					
-					player.sendMessage("Debug checkClanBaseDistance 5.1");
-					
+										
 					// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
 					// TODO Checken ob das wirklich richtig berechnet wird!!!
 					if ( clanLocation.distance( player.getLocation() ) > minDistance ) {
 						return true;
 					} else {
-						player.sendMessage("Du bist zu nahe am Clan " + clan.getName() + "!");
+						player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Clan " + clan.getName() + ".");
 					}
 					
 				}
 			} else {
 				return true;
-				
 			}
 			
 		} else {
-			player.sendMessage("Du bist zu nahe am Spawn!");
+			player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Spawn.");
 		}
 		
 		return false;
@@ -297,11 +293,11 @@ public class ClanManager {
 				return true;
 				
 			} else {
-				player.sendMessage("Du hast zu wenig Goldbarren, du brauchst " + kosten + "Goldbarren!");
+				player.sendMessage( ChatColor.GOLD + "Du brauchst " + kosten + " Goldbarren.");
 			}
 			
 		} else {
-			player.sendMessage("Um land zu kaufnen nimm bitte die Goldbarren in die Hand!");
+			player.sendMessage( ChatColor.GOLD + "Um Land zu kaufen nimm bitte " + kosten + " Goldbarren in die Hand.");
 		}
 		
 		return false;
@@ -318,14 +314,10 @@ public class ClanManager {
 		Integer kosten = getKostenList().get( clan.getStufe() );
 		Integer points = clan.getPoints();
 		
-		player.sendMessage(" Kosten : " + kosten + " Points : " + points);
-		
 		Integer rest = points - kosten;
 		
 		if ( rest >= 0 ) {
-			
-			player.sendMessage("Rest" + rest);
-			
+						
 			clan.setPoints( rest );
 			clan.setStufe( clan.getStufe() + 1 );
 			
@@ -334,7 +326,9 @@ public class ClanManager {
 			saveClans();
 			
 			return true;
-		}		
+		} else {
+			player.sendMessage(ChatColor.GOLD + "Ihr braucht " + kosten + " Punkte um upzugraden.");
+		}
 		
 		return false;
 	}
@@ -647,9 +641,14 @@ public class ClanManager {
 	
 	public Boolean hasPlayerAClan( Player player ) {
 		
-		if ( simpleClans.getClanManager().getAnyClanPlayer( player.getName() ).getClan() != null ) {
-			return true;
+		
+		if ( simpleClans.getClanManager().getAnyClanPlayer(player.getName()) != null ) {
+			if ( simpleClans.getClanManager().getAnyClanPlayer( player.getName() ).getClan() != null ) {
+				return true;
+			}
 		}
+		
+		
 		
 		return false;
 	}
@@ -721,32 +720,20 @@ public class ClanManager {
 	
 	public Boolean buyUpgradeAlertSystem( Player player ) {
 		
-		player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 1");
-		
 		Clan clan = getClanByPlayer(player);
-		
-		player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 2");
 		
 		if ( clan != null ) {
 			
 			if ( clan.getAlertsystem() != 3 ) {
-				player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 3");
-				
 				if ( getClanPointsForUpgradeAlertSystem(clan, player) ) {
-					
-					player.sendMessage(ChatColor.RED + "buyUpgradeAlertSystem 4");
 					clan.save(plugin.getConfig());
 					return true;
 				}
 			} else {
-				player.sendMessage("Alarmanlage ist schon voll ausgebaut!");
+				player.sendMessage(ChatColor.GOLD + "Alarmanlage ist schon voll ausgebaut.");
 			}
-			
-			
-			
-			
-		}
 		
+		}		
 		return false;
 	}
 	
@@ -755,13 +742,9 @@ public class ClanManager {
 		Integer kosten = getKostenListAlertSystem().get( clan.getAlertsystem() );
 		Integer points = clan.getPoints();
 		
-		player.sendMessage(" Kosten : " + kosten + " Points : " + points);
-		
 		Integer rest = points - kosten;
 		
 		if ( rest >= 0 ) {
-			
-			player.sendMessage("Rest" + rest);
 			
 			clan.setPoints( rest );
 			clan.setAlertsystem( clan.getAlertsystem() + 1 );
@@ -769,7 +752,14 @@ public class ClanManager {
 			clan.save(plugin.getConfig());
 			
 			return true;
-		}		
+		} else {
+			if ( clan.getAlertsystem() > 0 ) {
+				player.sendMessage(ChatColor.GOLD + "Ihr braucht " + kosten + " Punkte um upzugraden.");
+			} else {
+				player.sendMessage(ChatColor.GOLD + "Ihr braucht " + kosten + " Punkte um zu kaufen.");
+			}
+			
+		}
 		
 		return false;
 	}
@@ -805,14 +795,16 @@ public class ClanManager {
 				
 				if ( rest >= 0 ) {
 					clan.setClanSpawn(true);
-					
+					clan.setPoints( rest );
 					clan.save(plugin.getConfig());
 					
 					return true;
+				} else {
+					player.sendMessage(ChatColor.GOLD + "Ihr braucht " + kosten + " Punkte um den ClanSpawn zu kaufen.");
 				}
 				
 			} else {
-				player.sendMessage("ClanSpawn schon vorhanden.");
+				player.sendMessage(ChatColor.GOLD + "ClanSpawn schon vorhanden.");
 			}
 			
 		}
@@ -841,18 +833,37 @@ public class ClanManager {
 				
 				if ( rest >= 0 ) {
 					clan.setMoat(true);
-					
+					clan.setPoints( rest );
 					clan.save(plugin.getConfig());
 					
 					return true;
+				} else {
+					player.sendMessage(ChatColor.GOLD + "Ihr braucht " + kosten + " Punkte um den Wassergraben zu kaufen.");
 				}
+				
 			} else {
-				player.sendMessage("Moat schon vorhanden.");
+				player.sendMessage(ChatColor.GOLD + "Wassergraben schon vorhanden.");
 			}
 			
 		}
 		
 		return false;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void sortClans() {
+		
+		 Collections.sort(clans, new Comparator(){
+			 
+	            public int compare(Object o1, Object o2) {
+	                Clan clan1 = (Clan) o1;
+	                Clan clan2 = (Clan) o2;
+	               return clan1.getFlags().compareTo( clan2.getFlags());
+	            }
+	 
+	        });
+	 
+		
 	}
 	
 }

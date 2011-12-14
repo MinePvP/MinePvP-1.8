@@ -1,5 +1,6 @@
 package ch.nonameweb.bukkit.plugins.minepvp.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
@@ -25,7 +26,7 @@ public class ClanSpawnCommand {
 			if ( clan.getClanSpawn() == true ) {
 				player.teleport( clan.getBaseLocation() );
 			} else {
-				player.sendMessage("Euer Clan besitzt noch keinen ClanSpawn!");
+				player.sendMessage(ChatColor.GOLD + "Euer Clan besitzt noch keinen ClanSpawn!");
 			}			
 			
 		}

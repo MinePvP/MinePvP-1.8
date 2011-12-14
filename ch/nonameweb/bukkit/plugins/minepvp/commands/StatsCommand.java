@@ -26,6 +26,7 @@ public class StatsCommand {
 		
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		player.sendMessage(ChatColor.GREEN + "                            Stats");
+		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		player.sendMessage(ChatColor.WHITE + "Clan Name        Erroberte Flaggen");
 		
 		for ( Clan clan : clans ) {

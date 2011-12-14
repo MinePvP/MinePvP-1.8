@@ -1,6 +1,7 @@
 package ch.nonameweb.bukkit.plugins.minepvp;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
@@ -89,7 +90,7 @@ public class MinePvP extends JavaPlugin {
 	
 	public void log( String message ) {
 		
-		getServer().getConsoleSender().sendMessage(ChatColor.BLUE + "[MinePvP] : " + message);
+		Logger.getLogger("Minecraft").info("[MinePvP] : " + message);
 		
 		//logger.info(ChatColor.BLUE + "[MinePvP] : " + message);
 	}
