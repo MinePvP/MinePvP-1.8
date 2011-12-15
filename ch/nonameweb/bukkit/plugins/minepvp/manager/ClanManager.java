@@ -20,6 +20,7 @@ import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 public class ClanManager {
 	
 	MinePvP plugin;
+	SettingsManager settingsManager;
 	SimpleClans simpleClans;
 	
 	ArrayList<Clan> clans = new ArrayList<Clan>();;
@@ -29,8 +30,8 @@ public class ClanManager {
 	 */
 	public ClanManager() {
 		plugin = MinePvP.getInstance();
+		settingsManager = plugin.getSettingsManager();
 		simpleClans = plugin.getSimpleClans();
-		loadClans();
 	}
 	
 	/**
@@ -67,7 +68,7 @@ public class ClanManager {
 				}
 					
 			} else {
-				player.sendMessage(ChatColor.RED + "Ihr mŸsst mindestens " + plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.MinSpieler") + " Spieler sein um Land zu kaufen!");
+				player.sendMessage(ChatColor.RED + "Ihr mŸsst mindestens " + settingsManager.getErsteStufeMinPlayer() + " Spieler sein um Land zu kaufen!");
 			}
 			
 		} else {
@@ -131,9 +132,9 @@ public class ClanManager {
 				clan.load(clanName, plugin.getConfig());
 				
 				if ( clan.getStufe() == 0 ) {
-					clan.setRadius( plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.Radius") );
+					clan.setRadius( settingsManager.getErsteStufeRadius() );
 				} else {
-					clan.setRadius( getRadiusList().get( (clan.getStufe() - 1) ) );
+					clan.setRadius( settingsManager.getStufenRadius().get( (clan.getStufe() - 1) ) );
 				}
 				
 				plugin.log("Load Clan : " + clan.getName() );
@@ -173,9 +174,9 @@ public class ClanManager {
 					clan.load(clan.getName(), plugin.getConfig());
 					
 					if ( clan.getStufe() == 0 ) {
-						clan.setRadius( plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.Radius") );
+						clan.setRadius( settingsManager.getErsteStufeRadius() );
 					} else {
-						clan.setRadius( getRadiusList().get( (clan.getStufe() - 1) ) );
+						clan.setRadius( settingsManager.getStufenRadius().get( (clan.getStufe() - 1) ) );
 					}
 					
 					plugin.log("Load Clan : " + clan.getName() );
@@ -216,10 +217,8 @@ public class ClanManager {
 	 */
 	private Boolean checkClanBaseDistance( Player player ) {
 		
-		Integer minDistance = plugin.getConfig().getInt("Global.Settings.Land.MinAbstandZwischenClans");
-		
 		// Distanz zum Spawn
-		if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > minDistance ) {
+		if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > settingsManager.getMinAbstand() ) {
 		
 			if ( clans.size() >= 1 ) {
 				
@@ -229,7 +228,7 @@ public class ClanManager {
 										
 					// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
 					// TODO Checken ob das wirklich richtig berechnet wird!!!
-					if ( clanLocation.distance( player.getLocation() ) > minDistance ) {
+					if ( clanLocation.distance( player.getLocation() ) > settingsManager.getMinAbstand() ) {
 						return true;
 					} else {
 						player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Clan " + clan.getName() + ".");
@@ -254,10 +253,9 @@ public class ClanManager {
 	 */
 	public Boolean getMinPlayerForBuyLand( Player player ) {
 		
-		Integer minPlayer = plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.MinSpieler");
 		Integer clanPlayers = plugin.getSimpleClans().getClanManager().getClanByPlayerName(player.getName()).getSize();
 		
-		if ( minPlayer <= clanPlayers ) {
+		if ( settingsManager.getErsteStufeMinPlayer() <= clanPlayers ) {
 			return true;
 		}
 		
@@ -271,7 +269,7 @@ public class ClanManager {
 	 */
 	private Boolean getPlayerGoldForBuyLand( Player player ) {
 		
-		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.ErsteStufe.Kosten");
+		Integer kosten = settingsManager.getErsteStufeKosten();
 		Integer inHnad = player.getInventory().getItemInHand().getAmount();
 		
 		
@@ -311,7 +309,7 @@ public class ClanManager {
 	 */
 	private Boolean getClanPointsForUpgrade ( Clan clan, Player player ) {
 		
-		Integer kosten = getKostenList().get( clan.getStufe() );
+		Integer kosten = settingsManager.getStufenKosten().get( clan.getStufe() );
 		Integer points = clan.getPoints();
 		
 		Integer rest = points - kosten;
@@ -321,7 +319,7 @@ public class ClanManager {
 			clan.setPoints( rest );
 			clan.setStufe( clan.getStufe() + 1 );
 			
-			clan.setRadius( getRadiusList().get( (clan.getStufe() - 1) ) );
+			clan.setRadius( settingsManager.getStufenRadius().get( (clan.getStufe() - 1) ) );
 			
 			saveClans();
 			
@@ -548,7 +546,7 @@ public class ClanManager {
 		for ( Clan clan : clans ) {
 			
 			if ( clan.getName().equalsIgnoreCase( plugin.getClanManager().getClanByPlayer(player).getName() ) ) {
-				clan.addPoints( plugin.getConfig().getInt("Global.Settings.CTB.PointsPerBlock") );
+				clan.addPoints( settingsManager.getCtfPoints() );
 				clan.save(plugin.getConfig());
 			}
 			
@@ -582,7 +580,7 @@ public class ClanManager {
 	
 	public Boolean isMinPlayerOnline( Clan clan ) {
 		
-		Integer minPlayers = plugin.getConfig().getInt("Global.Settings.CTB.MinPlayerOnline");
+		Integer minPlayers = settingsManager.getCtfMinPlayerOnline();
 		Integer onlinePlayers = 0;
 		
 		Player[] players = plugin.getServer().getOnlinePlayers();
@@ -631,12 +629,12 @@ public class ClanManager {
 	}
 	
 	public void playerDamage( Player player ) {
-		player.damage( plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") );
-		player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Land.DMGonBlockDMG") ) );	
+		player.damage( settingsManager.getDamageOnBlockBracke() );
+		player.setFoodLevel( ( player.getFoodLevel() - settingsManager.getDamageOnBlockBracke() ) );	
 	}
 	
 	public void playerMoatDamage( Player player ) {
-		player.setFoodLevel( ( player.getFoodLevel() - plugin.getConfig().getInt("Global.Settings.Moat.DMG") ) );	
+		player.setFoodLevel( ( player.getFoodLevel() - settingsManager.getMoatDamage() ) );	
 	}
 	
 	public Boolean hasPlayerAClan( Player player ) {
@@ -739,7 +737,7 @@ public class ClanManager {
 	
 	private Boolean getClanPointsForUpgradeAlertSystem( Clan clan, Player player ) {
 		
-		Integer kosten = getKostenListAlertSystem().get( clan.getAlertsystem() );
+		Integer kosten = settingsManager.getKostenAlertsystem().get( clan.getAlertsystem() );
 		Integer points = clan.getPoints();
 		
 		Integer rest = points - kosten;
@@ -784,7 +782,7 @@ public class ClanManager {
 	public Boolean buyUpgradeClanSpawn( Player player ) {
 		
 		Clan clan = getClanByPlayer(player);
-		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.ClanSpawn.Kosten");
+		Integer kosten = settingsManager.getClanSpawnKosten();
 		
 		if ( clan != null ) {
 			
@@ -823,7 +821,7 @@ public class ClanManager {
 	public Boolean buyUpgradeMoat( Player player ) {
 		
 		Clan clan = getClanByPlayer(player);
-		Integer kosten = plugin.getConfig().getInt("Global.Settings.Land.Moat.Kosten");
+		Integer kosten = settingsManager.getMoatKosten();
 		
 		if ( clan != null ) {
 			

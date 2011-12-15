@@ -19,7 +19,7 @@ public class ReloadCommand {
 	public void execute( Player player, String[] arg ) {
 		
 		if ( player.isOp() ) {
-			plugin.getClanManager().reloadClans();
+			plugin.getSettingsManager().load();
 			player.sendMessage( ChatColor.BLUE + "Config wurde neu geladen");
 		} else {
 			player.sendMessage("Nur ein Operator kann dies tun.!");

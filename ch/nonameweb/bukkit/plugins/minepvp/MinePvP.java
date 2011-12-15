@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
-import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
@@ -16,6 +15,7 @@ import ch.nonameweb.bukkit.plugins.minepvp.listener.MinePvPEntityListener;
 import ch.nonameweb.bukkit.plugins.minepvp.listener.MinePvPPlayerListener;
 import ch.nonameweb.bukkit.plugins.minepvp.manager.ClanManager;
 import ch.nonameweb.bukkit.plugins.minepvp.manager.CommandManager;
+import ch.nonameweb.bukkit.plugins.minepvp.manager.SettingsManager;
 
 
 public class MinePvP extends JavaPlugin {
@@ -29,6 +29,7 @@ public class MinePvP extends JavaPlugin {
 	// Managers
 	private CommandManager commandManager;
 	private ClanManager clanManager;
+	private SettingsManager settingsManager;
 	
 	// Listeners
 	private MinePvPPlayerListener playerListener;
@@ -53,10 +54,12 @@ public class MinePvP extends JavaPlugin {
 	    }
 	    
 	    // Debug
-	    debug = getConfig().getBoolean("Global.Settings.Debug", false);
+	    //debug = getConfig().getBoolean("Global.Settings.Debug", false);
 	    
 	    // Default Settings
-	    loadConfig();
+	    //loadConfig();
+	    settingsManager = new SettingsManager();
+	    
 	    
 	    // Managers
 	    commandManager = new CommandManager();
@@ -82,7 +85,8 @@ public class MinePvP extends JavaPlugin {
 		
 		
 		// Config Speichern
-		saveConfig();
+		//saveConfig();
+		settingsManager.save();
 		
 		log("disabled");
 		
@@ -178,4 +182,9 @@ public class MinePvP extends JavaPlugin {
 	public ClanManager getClanManager() {
 		return clanManager;
 	}
+	
+	public SettingsManager getSettingsManager() {
+		return settingsManager;
+	}
+	
 }
