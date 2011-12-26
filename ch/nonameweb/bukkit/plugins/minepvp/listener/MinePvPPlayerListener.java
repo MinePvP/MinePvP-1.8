@@ -3,6 +3,7 @@ package ch.nonameweb.bukkit.plugins.minepvp.listener;
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -85,7 +86,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 			if ( clanTo != null ) {
 				
 				// Ist mindestens Spieler Online vom Clan
-				if ( clanManager.isMinPlayerOnline(clanTo) ) {
+				if ( clanManager.isMinPlayerOnline(clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
 					// AlarmSystem
 					
 					if ( playerClan != null ) {
@@ -230,7 +231,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 					if ( playerClan.getClanSpawn() ) {
 						player.teleport( playerClan.getBaseLocation() );
 					} else {
-						player.teleport( plugin.getServer().getWorld("world").getSpawnLocation() );
+						player.teleport( new Location(plugin.getServer().getWorld("world"), plugin.getServer().getWorld("world").getSpawnLocation().getX(), plugin.getServer().getWorld("world").getSpawnLocation().getY() + 4, plugin.getServer().getWorld("world").getSpawnLocation().getZ()) );
 					}
 					
 					player.sendMessage(ChatColor.GOLD + "Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");

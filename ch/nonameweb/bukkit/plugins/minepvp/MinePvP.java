@@ -64,6 +64,7 @@ public class MinePvP extends JavaPlugin {
 	    // Managers
 	    commandManager = new CommandManager();
 	    clanManager = new ClanManager();
+	    clanManager.loadClans();
 	    
 	    // Listeners
 	    playerListener = new MinePvPPlayerListener();

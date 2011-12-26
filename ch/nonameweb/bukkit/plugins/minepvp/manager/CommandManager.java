@@ -44,27 +44,31 @@ public class CommandManager {
 	 */
 	public void processMinePvP( Player player, String[] args ) {
 		
+		if ( args[0].isEmpty() == false ) {
+			String subcommand = args[0];
+	        String[] subargs = Helper.removeFirst(args);
+	        
+			if ( subcommand.equalsIgnoreCase("info") ) {
+	        	infoCommand.execute(player, subargs);
+	        } else if ( subcommand.equalsIgnoreCase("buy") ) {
+	        	buyCommand.execute(player, subargs);
+	        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
+	        	upgradeCommand.execute(player, subargs);
+	        } else if ( subcommand.equalsIgnoreCase("reload") ) {
+	        	reloadCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("help") ) {
+	        	helpCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("clanspawn") ) {
+	        	clanSpawnCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("stats") ) {
+	        	statsCommand.execute(player, subargs);
+		    } else {
+		    	player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
+	        }
+		} else {
+			player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
+		}
 		
-		String subcommand = args[0];
-        String[] subargs = Helper.removeFirst(args);
-        
-		if ( subcommand.equalsIgnoreCase("info") ) {
-        	infoCommand.execute(player, subargs);
-        } else if ( subcommand.equalsIgnoreCase("buy") ) {
-        	buyCommand.execute(player, subargs);
-        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
-        	upgradeCommand.execute(player, subargs);
-        } else if ( subcommand.equalsIgnoreCase("reload") ) {
-        	reloadCommand.execute(player, subargs);
-	    } else if ( subcommand.equalsIgnoreCase("help") ) {
-        	helpCommand.execute(player, subargs);
-	    } else if ( subcommand.equalsIgnoreCase("clanspawn") ) {
-        	clanSpawnCommand.execute(player, subargs);
-	    } else if ( subcommand.equalsIgnoreCase("stats") ) {
-        	statsCommand.execute(player, subargs);
-	    } else {
-        	player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
-        }
 			
 		
 				

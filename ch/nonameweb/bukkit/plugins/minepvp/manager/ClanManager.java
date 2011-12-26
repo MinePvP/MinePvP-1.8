@@ -117,7 +117,7 @@ public class ClanManager {
 		try {
 			clansList = plugin.getConfig().getConfigurationSection("Clans").getKeys(false);
 		} catch (Exception e) {
-			// TODO: handle exception
+			plugin.log("ClanList ");
 		}
 		
 		
@@ -480,7 +480,7 @@ public class ClanManager {
 				// Ist zwischen X
 				if ( clanPlusX > x && clanMinusX < x ) {
 					
-					if ( clanPlusY > y && clanMinusY < y ) {
+					//if ( clanPlusY > y && clanMinusY < y ) {
 
 						if ( clanPlusZ > z && clanMinusZ < z ) {
 							
@@ -488,7 +488,7 @@ public class ClanManager {
 							
 						}
 						
-					}
+					//}
 					
 				}
 				
