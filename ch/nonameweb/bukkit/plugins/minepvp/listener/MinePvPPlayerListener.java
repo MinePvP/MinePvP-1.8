@@ -125,7 +125,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 						
 					}
 					
-					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiebt von " + clanTo.getName() + "." );
+					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiet von " + clanTo.getName() + "." );
 				} else {
 					player.teleport( event.getFrom() );
 					player.sendMessage(ChatColor.GOLD + "Es ist kein Spieler aus dem Clan " + clanTo.getName() + " Online.");
