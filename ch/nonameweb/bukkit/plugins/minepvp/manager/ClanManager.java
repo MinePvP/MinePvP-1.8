@@ -451,6 +451,44 @@ public class ClanManager {
 		return true;
 	}
 	
+	
+	public Boolean moveClanFlag( Player player ) {
+		
+		removeClanFlag(player);
+		setClanFlag(player);
+		
+		return true;
+	}
+	
+	public Boolean removeClanFlag( Player player ) {
+		
+		Integer x = getClanByPlayer(player).getBaseX();
+		Integer y = getClanByPlayer(player).getBaseY() - 1;
+		Integer z = getClanByPlayer(player).getBaseZ();
+		
+		// Boden
+		plugin.getServer().getWorld("world").getBlockAt(x, y -1, z).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y -1, z).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y -1, z -1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y -1, z +1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x +1, y -1, z +1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x +1, y -1, z -1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x, y -1, z -1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x, y -1, z +1).setTypeId(1);
+		plugin.getServer().getWorld("world").getBlockAt(x +1, y -1, z).setTypeId(1);
+		
+		// Halterrung
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y, z).setTypeId(0);
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y + 1, z).setTypeId(0);
+		plugin.getServer().getWorld("world").getBlockAt(x -1, y + 2, z).setTypeId(0);
+		plugin.getServer().getWorld("world").getBlockAt(x, y + 2, z).setTypeId(0);
+		
+		// Flagge
+		plugin.getServer().getWorld("world").getBlockAt(x, y + 1, z).setTypeId(0);
+		
+		return true;
+	}
+	
 	/**
 	 * 
 	 * @param player
@@ -862,6 +900,17 @@ public class ClanManager {
 	        });
 	 
 		
+	}
+	
+	public Boolean setClanSpawn( Player player ) {
+		
+		Clan clan = getClanByPlayer(player);
+		
+		clan.setClanSpawnX( player.getLocation().getBlockX() );
+		clan.setClanSpawnY( player.getLocation().getBlockY() );
+		clan.setClanSpawnZ( player.getLocation().getBlockZ() );
+		
+		return true;
 	}
 	
 }

@@ -33,6 +33,10 @@ public class Clan {
 	// TeamSpawn
 	private Boolean clanSpawn = false;
 	
+	private Integer clanSpawnX = null;
+	private Integer clanSpawnY = null;
+	private Integer clanSpawnZ = null;
+	
 	/**
 	 * 
 	 */
@@ -89,6 +93,10 @@ public class Clan {
 		// TeamSpawn
 		setClanSpawn( config.getBoolean("Clans." + getName() + ".ClanSpawn", false) );
 		
+		setClanSpawnX( config.getInt("Clans." + getName() + ".ClanSpawnLocation.X") );
+		setClanSpawnY( config.getInt("Clans." + getName() + ".ClanSpawnLocation.Y") );
+		setClanSpawnZ( config.getInt("Clans." + getName() + ".ClanSpawnLocation.Z") );
+		
 		// Wassergraben
 		setMoat( config.getBoolean("Clans." + getName() + ".Moat", false) );
 	}
@@ -117,6 +125,10 @@ public class Clan {
 		
 		// TeamSpawn
 		config.set("Clans." + getName() + ".ClanSpawn", getClanSpawn());
+		
+		config.set("Clans." + getName() + ".ClanSpawnLocation.X", getClanSpawnX() );
+		config.set("Clans." + getName() + ".ClanSpawnLocation.Y", getClanSpawnY() );
+		config.set("Clans." + getName() + ".ClanSpawnLocation.Z", getClanSpawnZ() );
 	
 		// Wassergraben
 		config.set("Clans." + getName() + ".Moat", getMoat());
@@ -145,7 +157,22 @@ public class Clan {
 		
 		return location;
 	}
+	
+	
+	public void setClanSpawnLocation( Integer x, Integer y, Integer z ) {
+		setClanSpawnX(x);
+		setClanSpawnY(y);
+		setClanSpawnZ(z);
+	}
 
+	
+	public Location getClanSpawnLocation( ) {
+		
+		Location location = new Location( MinePvP.getInstance().getServer().getWorld("world"), getClanSpawnX(), getClanSpawnY(), getClanSpawnZ());
+		
+		return location;
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -324,6 +351,30 @@ public class Clan {
 
 	public void setMoat(Boolean moat) {
 		this.moat = moat;
+	}
+
+	public Integer getClanSpawnX() {
+		return clanSpawnX;
+	}
+
+	public void setClanSpawnX(Integer clanSpawnX) {
+		this.clanSpawnX = clanSpawnX;
+	}
+
+	public Integer getClanSpawnY() {
+		return clanSpawnY;
+	}
+
+	public void setClanSpawnY(Integer clanSpawnY) {
+		this.clanSpawnY = clanSpawnY;
+	}
+
+	public Integer getClanSpawnZ() {
+		return clanSpawnZ;
+	}
+
+	public void setClanSpawnZ(Integer clanSpawnZ) {
+		this.clanSpawnZ = clanSpawnZ;
 	}
 	
 	

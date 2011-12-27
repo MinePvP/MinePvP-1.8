@@ -229,7 +229,12 @@ public class MinePvPPlayerListener extends PlayerListener{
 					
 					// Wenn der Clan einen Spawn hat dahin sonst zum World Spawn
 					if ( playerClan.getClanSpawn() ) {
-						player.teleport( playerClan.getBaseLocation() );
+						if ( playerClan.getClanSpawnX() != null ) {
+							player.teleport( playerClan.getClanSpawnLocation() );
+						} else {
+							player.teleport( playerClan.getBaseLocation() );
+						}
+						
 					} else {
 						player.teleport( new Location(plugin.getServer().getWorld("world"), plugin.getServer().getWorld("world").getSpawnLocation().getX(), plugin.getServer().getWorld("world").getSpawnLocation().getY() + 4, plugin.getServer().getWorld("world").getSpawnLocation().getZ()) );
 					}
@@ -238,7 +243,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 				}
 			} else {
 				
-				player.teleport( plugin.getServer().getWorld("world").getSpawnLocation() );
+				player.teleport( new Location(plugin.getServer().getWorld("world"), plugin.getServer().getWorld("world").getSpawnLocation().getX(), plugin.getServer().getWorld("world").getSpawnLocation().getY() + 4, plugin.getServer().getWorld("world").getSpawnLocation().getZ()) );
 				
 				player.sendMessage(ChatColor.GOLD + "Du warst im Gebiet eines Feindlichen Clans wo keine Spieler Online sind.");
 				

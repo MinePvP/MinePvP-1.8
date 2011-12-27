@@ -26,8 +26,43 @@ public class ClanSpawnCommand {
 			
 			if ( plugin.getClanManager().hasPlayerAFlag(player) == false ) {
 				if ( clan.getClanSpawn() == true ) {
-					player.sendMessage(ChatColor.GREEN + "Teleportiert euch zum Clanspawn ClanSpawn!");
-					player.teleport( new Location( plugin.getServer().getWorld("world") , clan.getBaseX() -2, clan.getBaseY(), clan.getBaseZ() ) );
+					
+					if ( plugin.getClanManager().getClanByLocation( player.getLocation() ) == null || 
+						 plugin.getClanManager().getClanByLocation( player.getLocation() ).getName().equalsIgnoreCase( clan.getName() ) ) {
+						
+						player.sendMessage(ChatColor.GREEN + "Teleportiert euch in 5 Sekunden zum Clanspawn ClanSpawn!");
+						
+						long startet = System.currentTimeMillis();
+						long now = System.currentTimeMillis();
+						long end = startet + 5000;
+						
+						Integer x = player.getLocation().getBlockX();
+						Location startLocation = player.getLocation();
+						
+						while ( now < end ) {
+							now = System.currentTimeMillis();
+						}
+						
+						player.sendMessage("Start X :" + startLocation.getBlockX() + "Start X Int :" + x + " End X : " + plugin.getServer().getPlayer(player.getName()).getLocation().getBlockX() );
+						
+						if ( startLocation.getBlockX() == player.getLocation().getBlockX() && 
+							 startLocation.getBlockY() == player.getLocation().getBlockY() &&
+							 startLocation.getBlockZ() == player.getLocation().getBlockZ() ) {
+							
+							if ( clan.getClanSpawnX() != null ) {
+								player.teleport( clan.getClanSpawnLocation() );
+							} else {
+								player.teleport( new Location( plugin.getServer().getWorld("world") , clan.getBaseX() -2, clan.getBaseY(), clan.getBaseZ() ) );
+							}
+							
+						} else {
+							player.sendMessage(ChatColor.GOLD + "Teleporierung abgebrochen, du hast dich bewegt.");
+						}
+						
+					} else {
+						player.sendMessage(ChatColor.GOLD + "In einem feindlichen Kšnigreich geht das nicht.");
+					}
+					
 				} else {
 					player.sendMessage(ChatColor.GOLD + "Euer Clan besitzt noch keinen ClanSpawn!");
 				}

@@ -9,6 +9,7 @@ import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.HelpCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.ReloadCommand;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.SetCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.StatsCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.ClanSpawnCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.UpgradeCommand;
@@ -23,6 +24,7 @@ public class CommandManager {
 	private HelpCommand helpCommand;
 	private ClanSpawnCommand clanSpawnCommand;
 	private StatsCommand statsCommand;
+	private SetCommand setCommand;
 	
 	/**
 	 * 
@@ -35,6 +37,7 @@ public class CommandManager {
 		helpCommand = new HelpCommand();
 		clanSpawnCommand = new ClanSpawnCommand();
 		statsCommand = new StatsCommand();
+		setCommand = new SetCommand();
 	}
 	
 	/**
@@ -62,6 +65,8 @@ public class CommandManager {
 	        	clanSpawnCommand.execute(player, subargs);
 		    } else if ( subcommand.equalsIgnoreCase("stats") ) {
 	        	statsCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("set") ) {
+	        	setCommand.execute(player, subargs);
 		    } else {
 		    	player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
 	        }
