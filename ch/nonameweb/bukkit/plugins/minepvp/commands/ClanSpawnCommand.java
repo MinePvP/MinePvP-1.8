@@ -42,14 +42,12 @@ public class ClanSpawnCommand {
 						while ( now < end ) {
 							now = System.currentTimeMillis();
 						}
-						
-						player.sendMessage("Start X :" + startLocation.getBlockX() + "Start X Int :" + x + " End X : " + plugin.getServer().getPlayer(player.getName()).getLocation().getBlockX() );
-						
+												
 						if ( startLocation.getBlockX() == player.getLocation().getBlockX() && 
 							 startLocation.getBlockY() == player.getLocation().getBlockY() &&
 							 startLocation.getBlockZ() == player.getLocation().getBlockZ() ) {
 							
-							if ( clan.getClanSpawnX() != null ) {
+							if ( clan.getClanSpawnX() != 0 && clan.getClanSpawnZ() != 0 ) {
 								player.teleport( clan.getClanSpawnLocation() );
 							} else {
 								player.teleport( new Location( plugin.getServer().getWorld("world") , clan.getBaseX() -2, clan.getBaseY(), clan.getBaseZ() ) );
