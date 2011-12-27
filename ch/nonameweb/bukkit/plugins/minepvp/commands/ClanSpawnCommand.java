@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
+import ch.nonameweb.bukkit.plugins.minepvp.tasks.ClanSpawnTask;
 
 public class ClanSpawnCommand {
 
@@ -30,32 +31,9 @@ public class ClanSpawnCommand {
 					if ( plugin.getClanManager().getClanByLocation( player.getLocation() ) == null || 
 						 plugin.getClanManager().getClanByLocation( player.getLocation() ).getName().equalsIgnoreCase( clan.getName() ) ) {
 						
-						player.sendMessage(ChatColor.GREEN + "Teleportiert euch in 5 Sekunden zum Clanspawn ClanSpawn!");
+						player.sendMessage(ChatColor.GOLD + "Du wirst in 5 Sekunden geportet, bitte bewege dich nicht.");
 						
-						long startet = System.currentTimeMillis();
-						long now = System.currentTimeMillis();
-						long end = startet + 5000;
-						
-						Integer x = player.getLocation().getBlockX();
-						Location startLocation = player.getLocation();
-						
-						while ( now < end ) {
-							now = System.currentTimeMillis();
-						}
-												
-						if ( startLocation.getBlockX() == player.getLocation().getBlockX() && 
-							 startLocation.getBlockY() == player.getLocation().getBlockY() &&
-							 startLocation.getBlockZ() == player.getLocation().getBlockZ() ) {
-							
-							if ( clan.getClanSpawnX() != 0 && clan.getClanSpawnZ() != 0 ) {
-								player.teleport( clan.getClanSpawnLocation() );
-							} else {
-								player.teleport( new Location( plugin.getServer().getWorld("world") , clan.getBaseX() -2, clan.getBaseY(), clan.getBaseZ() ) );
-							}
-							
-						} else {
-							player.sendMessage(ChatColor.GOLD + "Teleporierung abgebrochen, du hast dich bewegt.");
-						}
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ClanSpawnTask(plugin, clan, player, player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()), 100L);
 						
 					} else {
 						player.sendMessage(ChatColor.GOLD + "In einem feindlichen Kšnigreich geht das nicht.");
