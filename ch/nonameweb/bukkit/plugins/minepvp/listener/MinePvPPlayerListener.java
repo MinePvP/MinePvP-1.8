@@ -172,6 +172,10 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
+		
+		
+		
+		
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
 		plugin.getClanManager().resetFlag(player);
 		
@@ -202,10 +206,20 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
-		if ( event.getFrom().distance( event.getTo() ) > 5 ) {
+		if ( event.getFrom().getWorld().equals( event.getTo().getWorld() ) ) {
+			
+			if ( event.getFrom().distance( event.getTo() ) > 5 ) {
+				// Wenn jemand noch eine Flagge hat wird diese Resettet	
+				plugin.getClanManager().resetFlag(player);
+			}
+			
+		} else {
+	
 			// Wenn jemand noch eine Flagge hat wird diese Resettet	
 			plugin.getClanManager().resetFlag(player);
+		
 		}
+		
 		
 	}
 	
