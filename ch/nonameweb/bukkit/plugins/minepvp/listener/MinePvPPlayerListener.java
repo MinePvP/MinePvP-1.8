@@ -173,9 +173,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 		}
 		
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
-		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
-			plugin.getClanManager().resetFlag(player);
-		}
+		plugin.getClanManager().resetFlag(player);
 		
 	}
 	
@@ -188,9 +186,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 		}
 		
 		// Wenn jemand noch eine Flagge hat wird diese Resettet
-		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
-			plugin.getClanManager().resetFlag(player);
-		}
+		plugin.getClanManager().resetFlag(player);
 		
 		
 	}
@@ -206,8 +202,8 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
-		// Wenn jemand noch eine Flagge hat wird diese Resettet
-		if ( player.getInventory().getHelmet().getTypeId() == 35  ) {
+		if ( event.getFrom().distance( event.getTo() ) > 5 ) {
+			// Wenn jemand noch eine Flagge hat wird diese Resettet	
 			plugin.getClanManager().resetFlag(player);
 		}
 		

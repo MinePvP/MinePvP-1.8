@@ -1,6 +1,7 @@
 package ch.nonameweb.bukkit.plugins.minepvp.listener;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -177,6 +178,7 @@ public class MinePvPBlockListener extends BlockListener{
 	public void onBlockPlace( BlockPlaceEvent event ) {
 		
 		Player player = event.getPlayer();
+		Block block = event.getBlock();
 		
 		Clan clanLand = clanManager.getClanByLocation( event.getBlock().getLocation() );
 		
@@ -189,11 +191,21 @@ public class MinePvPBlockListener extends BlockListener{
 				// Ist er im gleichen Clan wie das Land?
 				if ( clanLand.getName().equalsIgnoreCase( clanManager.getClanNameByPlayer(player) ) ) {	
 					
-				} else {				
+				} else {
+					
+					if ( block.getTypeId() == 46 ) {
+						event.setCancelled(true);
+					}
+					
 					clanManager.playerDamage(player);
 				}
 				
 			} else {
+				
+				if ( block.getTypeId() == 46 ) {
+					event.setCancelled(true);
+				}
+				
 				clanManager.playerDamage(player);			
 			}
 			

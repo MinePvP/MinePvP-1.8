@@ -33,7 +33,15 @@ public class ClanSpawnCommand {
 						
 						player.sendMessage(ChatColor.GOLD + "Du wirst in 5 Sekunden geportet, bitte bewege dich nicht.");
 						
-						plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ClanSpawnTask(plugin, clan, player, player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()), 100L);
+						plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ClanSpawnTask(plugin, clan.getName(), player.getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()), 100L);
+						
+						/*
+						if ( clan.getClanSpawnX() != 0 && clan.getClanSpawnZ() != 0 ) {
+							player.teleport( clan.getClanSpawnLocation() );
+						} else {
+							player.teleport( new Location( plugin.getServer().getWorld("world") , clan.getBaseX() -2, clan.getBaseY(), clan.getBaseZ() ) );
+						}
+						*/
 						
 					} else {
 						player.sendMessage(ChatColor.GOLD + "In einem feindlichen Kšnigreich geht das nicht.");

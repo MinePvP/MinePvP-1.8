@@ -10,17 +10,17 @@ import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 public class ClanSpawnTask implements Runnable {
 	
 	private MinePvP plugin;
-	private Clan clan;
-	private Player player;
+	private String clanString;
+	private String playerString;
 	
 	private Integer lastX;
 	private Integer lastY;
 	private Integer lastZ;
 	
-	public ClanSpawnTask( MinePvP plugin, Clan clan, Player player, Integer lastX, Integer lastY, Integer lastZ ) {
+	public ClanSpawnTask( MinePvP plugin, String clanString, String playerString, Integer lastX, Integer lastY, Integer lastZ ) {
 		this.plugin = plugin;
-		this.clan = clan;
-		this.player = player;
+		this.clanString = clanString;
+		this.playerString = playerString;
 		
 		this.lastX = lastX;
 		this.lastY = lastY;
@@ -30,7 +30,10 @@ public class ClanSpawnTask implements Runnable {
 	@Override
 	public void run() {
 		
-		if ( player.getLocation().equals( new Location(plugin.getServer().getWorld("world"), lastX, lastY, lastZ) ) ) {
+		Player player = plugin.getServer().getPlayer(playerString);
+		Clan clan = plugin.getClanManager().getClanByName(clanString);
+		
+		if ( lastX == player.getLocation().getBlockX() && lastY == player.getLocation().getBlockY() && lastZ == player.getLocation().getBlockZ() ) {
 			
 			if ( clan.getClanSpawnX() != 0 && clan.getClanSpawnZ() != 0 ) {
 				player.teleport( clan.getClanSpawnLocation() );
