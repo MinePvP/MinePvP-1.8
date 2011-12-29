@@ -378,8 +378,8 @@ public class ClanManager {
 	public Clan getClanByName( String clanName ) {
 		
 		if ( clans != null ) {
-			for ( Clan clan : clans ) {
-				if ( clan.getName() == clanName ) {
+			for ( Clan clan : clans ) {				
+				if ( clan.getName().equalsIgnoreCase(clanName) ) {
 					return clan;
 				}
 			}
@@ -657,8 +657,11 @@ public class ClanManager {
 			if ( player.getClan() != null ) {
 				if ( player.getClan().getName().equalsIgnoreCase( clan.getName() ) ) {
 					
-					plugin.getServer().getPlayer( player.getName() ).sendMessage(message);
+					Player player2 = plugin.getServer().getPlayer( player.getName() );
 					
+					if ( player2 != null && player2.isOnline() ) {
+						player2.sendMessage(message);
+					}
 				}
 			}
 			
@@ -683,8 +686,6 @@ public class ClanManager {
 				return true;
 			}
 		}
-		
-		
 		
 		return false;
 	}
@@ -912,5 +913,25 @@ public class ClanManager {
 		
 		return true;
 	}
+	
+	
+	public Boolean canClanAttackTheClan( Clan clan, Clan clan2 ) {
+		
+		if ( clan == null || clan2 == null ) {
+			return false;
+		}
+		
+		if ( clan2.getAttackedClan() != null ) {
+			
+			if ( clan2.getAttackedClan().getName().equalsIgnoreCase( clan.getName() ) ) {
+				return true;
+			}
+			
+		}
+				
+		
+		return false;
+	}
+	
 	
 }

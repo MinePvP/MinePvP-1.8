@@ -37,6 +37,11 @@ public class Clan {
 	private Integer clanSpawnY = null;
 	private Integer clanSpawnZ = null;
 	
+	
+	// Attack
+	private Boolean attack;
+	private Clan attackedClan;
+	
 	/**
 	 * 
 	 */
@@ -375,6 +380,22 @@ public class Clan {
 
 	public void setClanSpawnZ(Integer clanSpawnZ) {
 		this.clanSpawnZ = clanSpawnZ;
+	}
+
+	public Clan getAttackedClan() {
+		return attackedClan;
+	}
+
+	public void setAttackedClan(Clan attackedClan) {
+		this.attackedClan = attackedClan;
+	}
+
+	public Boolean getAttack() {
+		return attack;
+	}
+
+	public void setAttack(Boolean attack) {
+		this.attack = attack;
 	}
 	
 	

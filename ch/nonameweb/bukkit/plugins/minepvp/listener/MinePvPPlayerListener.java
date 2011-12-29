@@ -57,7 +57,10 @@ public class MinePvPPlayerListener extends PlayerListener{
 		
 		String command = split[0];
 		
-		if ( command.equalsIgnoreCase("minepvp") ) {			
+		if ( command.equalsIgnoreCase("minepvp") ) {
+			
+			plugin.log(" Command From : " + event.getPlayer().getName() + " : " + event.getMessage().toString() );
+			
 			plugin.getCommandManager().processMinePvP(player, Helper.removeFirst(split));
 		}
 	}
@@ -86,7 +89,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 			if ( clanTo != null ) {
 				
 				// Ist mindestens Spieler Online vom Clan
-				if ( clanManager.isMinPlayerOnline(clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
+				if ( clanManager.canClanAttackTheClan(playerClan, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
 					// AlarmSystem
 					
 					if ( playerClan != null ) {
@@ -128,7 +131,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiet von " + clanTo.getName() + "." );
 				} else {
 					player.teleport( event.getFrom() );
-					player.sendMessage(ChatColor.GOLD + "Es ist kein Spieler aus dem Clan " + clanTo.getName() + " Online.");
+					player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
 				}
 					
 			}
@@ -206,20 +209,18 @@ public class MinePvPPlayerListener extends PlayerListener{
 			return;
 		}
 		
-		if ( event.getFrom().getWorld().equals( event.getTo().getWorld() ) ) {
+		if ( event.getFrom().getWorld().getName().equalsIgnoreCase("world") ) {
 			
-			if ( event.getFrom().distance( event.getTo() ) > 5 ) {
-				// Wenn jemand noch eine Flagge hat wird diese Resettet	
-				plugin.getClanManager().resetFlag(player);
+			if ( event.getTo().getWorld().getName().equalsIgnoreCase("world") ) {
+				if ( event.getFrom().distance( event.getTo() ) > 5 ) {
+				
+					// Wenn jemand noch eine Flagge hat wird diese Resettet	
+					plugin.getClanManager().resetFlag(player);
+					
+				}
 			}
 			
-		} else {
-	
-			// Wenn jemand noch eine Flagge hat wird diese Resettet	
-			plugin.getClanManager().resetFlag(player);
-		
-		}
-		
+		}		
 		
 	}
 	

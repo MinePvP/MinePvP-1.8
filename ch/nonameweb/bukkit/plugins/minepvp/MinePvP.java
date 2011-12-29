@@ -86,7 +86,7 @@ public class MinePvP extends JavaPlugin {
 		
 		
 		// Config Speichern
-		//saveConfig();
+		//saveConfig();	
 		settingsManager.save();
 		
 		log("disabled");
@@ -136,6 +136,11 @@ public class MinePvP extends JavaPlugin {
 	    // Capture the Block
 	    getConfig().addDefault("Global.Settings.CTB.PointsPerBlock", 2);
 	    getConfig().addDefault("Global.Settings.CTB.MinPlayerOnline", 3);
+	    
+	    
+	    // Attack
+	    getConfig().addDefault("Global.Settings.Attack.Time", 10);
+	    getConfig().addDefault("Global.Settings.Attack.Delay", 5);
 	    
 		getConfig().options().copyDefaults(true);
 		saveConfig();

@@ -5,6 +5,8 @@ import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
+import ch.nonameweb.bukkit.plugins.minepvp.commands.AttackCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.BuyCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.HelpCommand;
 import ch.nonameweb.bukkit.plugins.minepvp.commands.InfoCommand;
@@ -25,6 +27,7 @@ public class CommandManager {
 	private ClanSpawnCommand clanSpawnCommand;
 	private StatsCommand statsCommand;
 	private SetCommand setCommand;
+	private AttackCommand attackCommand;
 	
 	/**
 	 * 
@@ -38,6 +41,7 @@ public class CommandManager {
 		clanSpawnCommand = new ClanSpawnCommand();
 		statsCommand = new StatsCommand();
 		setCommand = new SetCommand();
+		attackCommand = new AttackCommand();
 	}
 	
 	/**
@@ -47,32 +51,41 @@ public class CommandManager {
 	 */
 	public void processMinePvP( Player player, String[] args ) {
 		
-		if ( args[0].isEmpty() == false ) {
+		try {
+			
 			String subcommand = args[0];
-	        String[] subargs = Helper.removeFirst(args);
-	        
+		    String[] subargs = Helper.removeFirst(args);
+		    
 			if ( subcommand.equalsIgnoreCase("info") ) {
-	        	infoCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("buy") ) {
-	        	buyCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
-	        	upgradeCommand.execute(player, subargs);
-	        } else if ( subcommand.equalsIgnoreCase("reload") ) {
-	        	reloadCommand.execute(player, subargs);
+		    	infoCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("buy") ) {
+		    	buyCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("upgrade") ) {
+		    	upgradeCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("reload") ) {
+		    	reloadCommand.execute(player, subargs);
 		    } else if ( subcommand.equalsIgnoreCase("help") ) {
-	        	helpCommand.execute(player, subargs);
+		    	helpCommand.execute(player, subargs);
 		    } else if ( subcommand.equalsIgnoreCase("clanspawn") ) {
-	        	clanSpawnCommand.execute(player, subargs);
+		    	clanSpawnCommand.execute(player, subargs);
 		    } else if ( subcommand.equalsIgnoreCase("stats") ) {
-	        	statsCommand.execute(player, subargs);
+		    	statsCommand.execute(player, subargs);
 		    } else if ( subcommand.equalsIgnoreCase("set") ) {
-	        	setCommand.execute(player, subargs);
+		    	setCommand.execute(player, subargs);
+		    } else if ( subcommand.equalsIgnoreCase("attack") ) {
+		    	attackCommand.execute(player, subargs);
 		    } else {
 		    	player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
-	        }
-		} else {
+		    }
+			
+		} catch (Exception e) {
+			
+			MinePvP.getInstance().log( e.getMessage() );
+			
 			player.sendMessage(ChatColor.RED + "Benutzung: /minepvp help");
 		}
+		
+		
 		
 			
 		
