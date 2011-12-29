@@ -58,9 +58,16 @@ public class BuyCommand {
 					player.sendMessage(ChatColor.RED + "Wassergraben wurde nicht gekauft.");
 				}
 				
+			} else if ( arg[0].equalsIgnoreCase("repair") ) {
+				
+				if ( plugin.getClanManager().buyRepairChest( player ) ) {
+					player.sendMessage(ChatColor.GREEN + "ReapairChest wurde gekauft.");
+				} else {
+					player.sendMessage(ChatColor.RED + "ReapairChest wurde nicht gekauft.");
+				}
 				
 			} else {
-				player.sendMessage(ChatColor.RED + "Benutzung : /minepvp buy land|alertsystem|clanspawn|moat");
+				player.sendMessage(ChatColor.RED + "Benutzung : /minepvp buy land|alertsystem|clanspawn|moat|repair");
 			}
 			
 		} else {

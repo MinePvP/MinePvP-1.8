@@ -38,6 +38,8 @@ public class SettingsManager {
 	private Integer attackDelay;
 	private Integer attackTime;
 	
+	private Integer repairChestKosten;
+	
 	public SettingsManager() {
 		this.config = MinePvP.getInstance().getConfig();
 		
@@ -103,6 +105,9 @@ public class SettingsManager {
 	    config.addDefault("Settings.Attack.Time", 30);
 	    config.addDefault("Settings.Attack.Delay", 10);
 		
+	    // RepariChest
+	    config.addDefault("Settings.Repair.Kosten", 10);
+	    
 		config.options().copyDefaults(true);
 		MinePvP.getInstance().saveConfig();
 	}
@@ -137,6 +142,8 @@ public class SettingsManager {
 		setAttackDelay( config.getInt("Settings.Attack.Delay") );
 		setAttackTime( config.getInt("Settings.Attack.Time") );
 		
+		setRepairChestKosten( config.getInt("Settings.Repair.Kosten") );
+		
 	}
 	
 	public void save() {
@@ -166,6 +173,8 @@ public class SettingsManager {
 		
 		config.set("Settings.Attack.Delay", getAttackDelay());
 		config.set("Settings.Attack.Time", getAttackTime());
+		
+		config.set("Settings.Repair.Kosten", getRepairChestKosten());
 		
 		MinePvP.getInstance().saveConfig();
 	}
@@ -312,6 +321,14 @@ public class SettingsManager {
 
 	public void setAttackTime(Integer attackTime) {
 		this.attackTime = attackTime;
+	}
+
+	public Integer getRepairChestKosten() {
+		return repairChestKosten;
+	}
+
+	public void setRepairChestKosten(Integer repairChestKosten) {
+		this.repairChestKosten = repairChestKosten;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package ch.nonameweb.bukkit.plugins.minepvp.manager;
 
+import java.awt.image.SinglePixelPackedSampleModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +12,9 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 	
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
@@ -946,5 +949,57 @@ public class ClanManager {
 		return false;
 	}
 	
+	
+	public Boolean buyRepairChest( Player player ) {
+		
+		Clan clan = getClanByPlayer(player);
+		
+		if ( clan != null ) {
+			
+			
+			if ( clan.getPoints() >= plugin.getSettingsManager().getRepairChestKosten() ) {
+				
+				Integer points = clan.getPoints() - plugin.getSettingsManager().getRepairChestKosten();
+				
+				if ( generateRepairChest(player) ) {
+					
+					clan.setPoints( points );
+					
+					return true;
+				}
+				
+			} else {
+				player.sendMessage( ChatColor.GOLD + "Ihr braucht " + plugin.getSettingsManager().getRepairChestKosten() +" Punkte um die Repari Chest zu kaufen.");
+			}
+			
+		}		
+		
+		return false;
+	}
+	
+	
+	public Boolean generateRepairChest( Player player ) {
+		
+		Location location = player.getLocation();
+		
+		location.setZ( location.getZ() - 1 );
+		Block blockChest = plugin.getServer().getWorld("world").getBlockAt( location );
+		
+		location.setY( location.getY() + 1 );
+		
+		Block blockSchild = plugin.getServer().getWorld("world").getBlockAt( location );
+		
+		blockChest.setType( Material.CHEST );
+		
+		blockSchild.setType( Material.WALL_SIGN );
+		
+		Sign sign = (Sign) blockSchild.getState();
+		
+		sign.setLine(0, "[Repair]");
+		
+		sign.update();
+	
+		return true;
+	}
 	
 }
