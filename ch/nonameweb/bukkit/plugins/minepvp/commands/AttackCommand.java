@@ -27,8 +27,6 @@ public class AttackCommand {
 			
 			clan = plugin.getClanManager().getClanByPlayer(player);
 			
-			player.sendMessage("Clan " + arg[0].toString() );
-			
 			clan2 = plugin.getClanManager().getClanByName( arg[0].toString() );
 						
 			
@@ -39,19 +37,21 @@ public class AttackCommand {
 					if ( plugin.getClanManager().isMinPlayerOnline(clan2) ) {
 						
 						if ( clan2.getAttackedClan() == null ) {
-							Integer time = plugin.getConfig().getInt("Global.Settings.Attack.Time");
-							Integer delay = plugin.getConfig().getInt("Global.Settings.Attack.Delay");
+							long time = plugin.getSettingsManager().getAttackTime();
+							long delay = plugin.getSettingsManager().getAttackDelay();							
+							
+							plugin.getClanManager().sendClanMessage(clan, ChatColor.GREEN + "Ihr kšnnt das Kšnigreich " + clan2.getName() + " in " + delay + "min angreifen.");
+							plugin.getClanManager().sendClanMessage(clan2, ChatColor.RED + "Ihr kšnnt in " + delay + "min vom Kšnigreich " + clan.getName() + " angegriffen werden.");
+							
+							time = ( time * 60 ) * 20L;
+							delay = ( delay * 60 ) * 20L;
+							time = time + delay;
+							
+							clan2.setAttackedClan(clan);
 							
 							
-							plugin.getClanManager().sendClanMessage(clan, "Ihr kšnnt das Kšnigreich " + clan2.getName() + " in " + delay + " angreifen.");
-							plugin.getClanManager().sendClanMessage(clan2, "Ihr kšnnt in " + delay + " vom Kšnigreich " + clan.getName() + " angegriffen werden.");
-							
-							time = ( time * 60 ) * 20;
-							delay = ( delay * 60 ) * 20;
-							delay = delay + time;
-							
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), 6000L); // ToDo now is a test delay
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), 42000L); // Test time
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), delay); // ToDo now is a test delay
+							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), time); // Test time
 							
 						} else {
 							player.sendMessage(ChatColor.GOLD + "Dieses Kšnigreich wird bereits von Kšnigreich " + clan2.getAttackedClan().getName() + " angegriffen.");

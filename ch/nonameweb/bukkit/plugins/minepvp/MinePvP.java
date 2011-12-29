@@ -100,52 +100,6 @@ public class MinePvP extends JavaPlugin {
 		//logger.info(ChatColor.BLUE + "[MinePvP] : " + message);
 	}
 	
-	private void loadConfig() {
-		
-		getConfig().addDefault("Global.Settings.Debug", false);
-		
-		// Sonstiges
-		getConfig().addDefault("Global.Settings.Land.DMGonBlockDMG", 2);
-		getConfig().addDefault("Global.Settings.Moat.DMG", 0.2);
-		
-		// Land Kaufen Upgraden Kosten
-	    getConfig().addDefault("Global.Settings.Land.ErsteStufe.Radius", 20);
-	    getConfig().addDefault("Global.Settings.Land.ErsteStufe.Kosten", 40);
-	    getConfig().addDefault("Global.Settings.Land.ErsteStufe.MinSpieler", 3);
-	    
-	    getConfig().addDefault("Global.Settings.Land.MinAbstandZwischenClans", 1000);
-	    
-	    // TeamSpawn Kosten
-	    getConfig().addDefault("Global.Settings.Land.ClanSpawn.Kosten", 40);
-	    
-	    // Wassergraben
-	    getConfig().addDefault("Global.Settings.Land.Moat.Kosten", 100);
-	    
-	    // Stufen
-	    String[] listStufenRadius = {"30", "40", "50", "60", "70", "80", "90", "100", "110", "120"};
-	    String[] listStufenKosten = {"5", "5", "10", "10", "20", "20", "30", "30", "40", "40"};
-	    
-	    getConfig().addDefault("Global.Settings.Land.Stufen.Radius", Arrays.asList( listStufenRadius ));
-	    getConfig().addDefault("Global.Settings.Land.Stufen.Kosten", Arrays.asList( listStufenKosten ));
-	    
-	    // AlertSystem
-	    String[] listAlertSystemKosten = {"20", "40", "60"};
-	    
-	    getConfig().addDefault("Global.Settings.Land.AlertSystem.Kosten", Arrays.asList( listAlertSystemKosten ));
-	    
-	    // Capture the Block
-	    getConfig().addDefault("Global.Settings.CTB.PointsPerBlock", 2);
-	    getConfig().addDefault("Global.Settings.CTB.MinPlayerOnline", 3);
-	    
-	    
-	    // Attack
-	    getConfig().addDefault("Global.Settings.Attack.Time", 10);
-	    getConfig().addDefault("Global.Settings.Attack.Delay", 5);
-	    
-		getConfig().options().copyDefaults(true);
-		saveConfig();
-	}
-	
 	private void registerEvents() {
 		
 		// Player

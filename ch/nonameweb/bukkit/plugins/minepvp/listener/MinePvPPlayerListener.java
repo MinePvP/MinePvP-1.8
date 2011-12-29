@@ -30,14 +30,15 @@ public class MinePvPPlayerListener extends PlayerListener{
 	 * 
 	 */
 	public MinePvPPlayerListener() {
-		plugin = MinePvP.getInstance();
-		clanManager = plugin.getClanManager();
 	}
 	
 	/**
 	 * 
 	 */
 	public void onPlayerCommandPreprocess( PlayerCommandPreprocessEvent event ) {
+		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
 		
 		if ( event.isCancelled() ) {
 			return;
@@ -70,6 +71,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	 */
 	public void onPlayerMove ( PlayerMoveEvent event ) {
 		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
+		
 		if ( event.isCancelled() ) {
 			return;
 		}
@@ -90,26 +94,24 @@ public class MinePvPPlayerListener extends PlayerListener{
 				
 				// Ist mindestens Spieler Online vom Clan
 				if ( clanManager.canClanAttackTheClan(playerClan, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
-					// AlarmSystem
 					
-					if ( playerClan != null ) {
-						if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
+					// AlarmSystem				
+					if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
+						
+						if ( clanTo.getAlertsystem() == 1 ) {
 							
-							if ( clanTo.getAlertsystem() == 1 ) {
-								
-								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
-								
-							} else if ( clanTo.getAlertsystem() == 2 ) {
-								
-								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
-								
-							} else if ( clanTo.getAlertsystem() == 3 ) {
-								
-								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
-								
-							}
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
+							
+						} else if ( clanTo.getAlertsystem() == 2 ) {
+							
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+							
+						} else if ( clanTo.getAlertsystem() == 3 ) {
+							
+							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
 							
 						}
+						
 					} else {
 						
 						if ( clanTo.getAlertsystem() == 1 ) {
@@ -131,7 +133,13 @@ public class MinePvPPlayerListener extends PlayerListener{
 					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiet von " + clanTo.getName() + "." );
 				} else {
 					player.teleport( event.getFrom() );
-					player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
+					
+					if ( clanManager.isClanTheAttackedClan(playerClan, clanTo) ) {
+						player.sendMessage(ChatColor.GOLD + "Euer Kšnigreich hatt schon einen Angriff gestartet, wartet bis Ihr das GO kriegt.");
+					} else {
+						player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
+					}
+					
 				}
 					
 			}
@@ -169,6 +177,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	 */
 	public void onPlayerQuit ( PlayerQuitEvent event ) {
 		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
+		
 		Player player = event.getPlayer();
 		
 		if ( player == null ) {
@@ -185,6 +196,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	}
 	
 	public void onPlayerKick( PlayerKickEvent event) {
+		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
 		
 		Player player = event.getPlayer();
 		
@@ -203,6 +217,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	 */
 	public void onPlayerTeleport ( PlayerTeleportEvent event ) {
 		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
+		
 		Player player = event.getPlayer();
 		
 		if ( player == null ) {
@@ -212,12 +229,18 @@ public class MinePvPPlayerListener extends PlayerListener{
 		if ( event.getFrom().getWorld().getName().equalsIgnoreCase("world") ) {
 			
 			if ( event.getTo().getWorld().getName().equalsIgnoreCase("world") ) {
+				
 				if ( event.getFrom().distance( event.getTo() ) > 5 ) {
 				
 					// Wenn jemand noch eine Flagge hat wird diese Resettet	
 					plugin.getClanManager().resetFlag(player);
 					
-				}
+				}			
+				
+			} else {
+				
+				plugin.getClanManager().resetFlag(player);
+				
 			}
 			
 		}		
@@ -225,6 +248,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	}
 	
 	public void onPlayerJoin ( PlayerJoinEvent event ) {
+		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
 		
 		Player player = event.getPlayer();
 		
@@ -268,6 +294,8 @@ public class MinePvPPlayerListener extends PlayerListener{
 	
 	public void onPlayerBucketEmpty (PlayerBucketEmptyEvent event) {
 		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
 		
 		Player player = event.getPlayer();
 		Material bucket = event.getBucket();
@@ -314,6 +342,9 @@ public class MinePvPPlayerListener extends PlayerListener{
 	}
 	
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		
+		plugin = MinePvP.getInstance();
+		clanManager = plugin.getClanManager();
 		
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();

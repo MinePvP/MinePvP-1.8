@@ -35,6 +35,9 @@ public class SettingsManager {
 	private Integer ctfPoints;
 	private Integer ctfMinPlayerOnline;
 	
+	private Integer attackDelay;
+	private Integer attackTime;
+	
 	public SettingsManager() {
 		this.config = MinePvP.getInstance().getConfig();
 		
@@ -96,6 +99,10 @@ public class SettingsManager {
 		config.addDefault("Settings.CTF.Points", 1);
 		config.addDefault("Settings.CTF.MinPlayerOnline", 3);
 		
+		// Attack
+	    config.addDefault("Settings.Attack.Time", 30);
+	    config.addDefault("Settings.Attack.Delay", 10);
+		
 		config.options().copyDefaults(true);
 		MinePvP.getInstance().saveConfig();
 	}
@@ -127,6 +134,9 @@ public class SettingsManager {
 		setCtfPoints( config.getInt("Settings.CTF.Points") );
 		setCtfMinPlayerOnline( config.getInt("Settings.CTF.MinPlayerOnline") );
 		
+		setAttackDelay( config.getInt("Settings.Attack.Delay") );
+		setAttackTime( config.getInt("Settings.Attack.Time") );
+		
 	}
 	
 	public void save() {
@@ -153,6 +163,9 @@ public class SettingsManager {
 		
 		config.set("Settings.CTF.Points", getCtfPoints());
 		config.set("Settings.CTF.MinPlayerOnline", getCtfMinPlayerOnline());
+		
+		config.set("Settings.Attack.Delay", getAttackDelay());
+		config.set("Settings.Attack.Time", getAttackTime());
 		
 		MinePvP.getInstance().saveConfig();
 	}
@@ -283,6 +296,22 @@ public class SettingsManager {
 		for ( Integer kosten : kostenAlertsystem ) {
 			this.kostenAlertsystem.add( kosten );
 		}
+	}
+
+	public Integer getAttackDelay() {
+		return attackDelay;
+	}
+
+	public void setAttackDelay(Integer attackDelay) {
+		this.attackDelay = attackDelay;
+	}
+
+	public Integer getAttackTime() {
+		return attackTime;
+	}
+
+	public void setAttackTime(Integer attackTime) {
+		this.attackTime = attackTime;
 	}
 	
 	

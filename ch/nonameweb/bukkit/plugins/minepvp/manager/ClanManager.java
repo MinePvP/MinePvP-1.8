@@ -917,9 +917,23 @@ public class ClanManager {
 	
 	public Boolean canClanAttackTheClan( Clan clan, Clan clan2 ) {
 		
-		if ( clan == null || clan2 == null ) {
-			return false;
+		if ( clan2.getAttackedClan() != null ) {
+			
+			if ( clan2.getAttackedClan().getName().equalsIgnoreCase( clan.getName() ) ) {
+				
+				if ( clan2.getAttack() ) {
+					return true;
+				}
+				
+			}
+			
 		}
+				
+		
+		return false;
+	}
+	
+	public Boolean isClanTheAttackedClan( Clan clan, Clan clan2 ) {
 		
 		if ( clan2.getAttackedClan() != null ) {
 			
@@ -928,7 +942,6 @@ public class ClanManager {
 			}
 			
 		}
-				
 		
 		return false;
 	}

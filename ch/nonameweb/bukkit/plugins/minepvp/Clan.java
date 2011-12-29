@@ -39,8 +39,8 @@ public class Clan {
 	
 	
 	// Attack
-	private Boolean attack;
-	private Clan attackedClan;
+	private Boolean attack = false;
+	private Clan attackedClan = null;
 	
 	/**
 	 * 
