@@ -91,9 +91,10 @@ public class MinePvPPlayerListener extends PlayerListener{
 		if ( clanFrom == null ) {
 			
 			if ( clanTo != null ) {
-				
+								
 				// Ist mindestens Spieler Online vom Clan
-				if ( clanManager.canClanAttackTheClan(playerClan, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
+				if ( clanManager.canClanAttackTheClan(player, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
+					
 					
 					// AlarmSystem				
 					if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
@@ -154,7 +155,18 @@ public class MinePvPPlayerListener extends PlayerListener{
 				if ( player.getLocation().getBlock().isLiquid() ) {
 					
 					// Wenn der Spieler sich in einem Feindlichen Clangebiet bewegt
-					if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) != true && clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true  ) {
+					if ( playerClan != null ) {
+						
+						if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) != true && clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true  ) {
+							
+							// Wenn der Clan einen Wassergraben hat
+							if ( clanFrom.getMoat() == true ) {
+								clanManager.playerMoatDamage(player);
+							}
+							
+						}
+						
+					} else {
 						
 						// Wenn der Clan einen Wassergraben hat
 						if ( clanFrom.getMoat() == true ) {
@@ -162,6 +174,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 						}
 						
 					}
+					
 					
 				}
 				

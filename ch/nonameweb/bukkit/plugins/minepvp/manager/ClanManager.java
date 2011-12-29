@@ -918,20 +918,26 @@ public class ClanManager {
 	}
 	
 	
-	public Boolean canClanAttackTheClan( Clan clan, Clan clan2 ) {
+	public Boolean canClanAttackTheClan( Player player, Clan clan2 ) {
 		
-		if ( clan2.getAttackedClan() != null ) {
-			
-			if ( clan2.getAttackedClan().getName().equalsIgnoreCase( clan.getName() ) ) {
+		Clan clan = getClanByPlayer(player);
 				
-				if ( clan2.getAttack() ) {
-					return true;
+		if ( clan != null ) {
+			
+			if ( clan2.getAttackedClan() != null ) {
+				
+				if ( clan2.getAttackedClan().getName().equalsIgnoreCase( clan.getName() ) ) {
+					
+					if ( clan2.getAttack() ) {
+						return true;
+					}
+					
 				}
 				
 			}
 			
 		}
-				
+
 		
 		return false;
 	}

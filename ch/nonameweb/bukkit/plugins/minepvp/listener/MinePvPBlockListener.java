@@ -79,10 +79,7 @@ public class MinePvPBlockListener extends BlockListener{
 					
 					// Wird auf die Flagge geschlagen?
 					if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
-						
-						// überprüfen ob die mindest anzahl spieler des gegner teams online sind
-						if ( clanManager.isMinPlayerOnline( clanLand ) ) {
-							
+													
 							// Flag Block Entfernen
 							block.setTypeId(0);
 							
@@ -101,13 +98,7 @@ public class MinePvPBlockListener extends BlockListener{
 							
 							// Das gegnerrische Team benachrichtigen das Ihre Flagge erbeutet wurde
 							clanManager.sendClanMessage(clanLand, ChatColor.GOLD + "Die Flagge wurde von " + player.getName() + " erbeutet.");
-						} else {
-							
-							player.sendMessage(ChatColor.GOLD + "Es sind zu wenige Spieler aus dem gegnerischem Team online.");
-							
-							event.setCancelled(true);
-							
-						}
+						
 						
 					}
 					
