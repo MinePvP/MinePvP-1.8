@@ -91,59 +91,59 @@ public class MinePvPPlayerListener extends PlayerListener{
 		if ( clanFrom == null ) {
 			
 			if ( clanTo != null ) {
-								
-				// Ist mindestens Spieler Online vom Clan
-				if ( clanManager.canClanAttackTheClan(player, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
+				
+				if ( playerClan != null ) {
 					
-					
-					// AlarmSystem				
-					if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
+					// Ist mindestens Spieler Online vom Clan
+					if ( clanManager.canClanAttackTheClan(player, clanTo) || clanTo.getName().equalsIgnoreCase( playerClan.getName() ) ) {
 						
-						if ( clanTo.getAlertsystem() == 1 ) {
+						
+						// AlarmSystem				
+						if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
 							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
-							
-						} else if ( clanTo.getAlertsystem() == 2 ) {
-							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
-							
-						} else if ( clanTo.getAlertsystem() == 3 ) {
-							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+							if ( clanTo.getAlertsystem() == 1 ) {
+								
+								player.sendMessage("Test");
+								
+								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
+								
+							} else if ( clanTo.getAlertsystem() == 2 ) {
+								
+								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+								
+							} else if ( clanTo.getAlertsystem() == 3 ) {
+								
+								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler " + player.getName() + " vom Clan " + playerClan.getName() + " betritt euer Gebiet!");
+								
+							}
 							
 						}
+						
+						player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiet von " + clanTo.getName() + "." );
 						
 					} else {
 						
-						if ( clanTo.getAlertsystem() == 1 ) {
-							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
-							
-						} else if ( clanTo.getAlertsystem() == 2 ) {
-							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler ohne Clan betritt euer Gebiet!");
-							
-						} else if ( clanTo.getAlertsystem() == 3 ) {
-							
-							clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler ohne Clan " + playerClan.getName() + " betritt euer Gebiet!");
-							
+						player.teleport( event.getFrom() );
+						
+						if ( clanManager.isClanTheAttackedClan(playerClan, clanTo) ) {
+							player.sendMessage(ChatColor.GOLD + "Euer Kšnigreich hatt schon einen Angriff gestartet, wartet bis Ihr das GO kriegt.");
+						} else {
+							player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
 						}
 						
 					}
-					
-					player.sendMessage(ChatColor.GOLD + "Du betrittst das gebiet von " + clanTo.getName() + "." );
+						
 				} else {
+					
 					player.teleport( event.getFrom() );
 					
-					if ( clanManager.isClanTheAttackedClan(playerClan, clanTo) ) {
-						player.sendMessage(ChatColor.GOLD + "Euer Kšnigreich hatt schon einen Angriff gestartet, wartet bis Ihr das GO kriegt.");
-					} else {
-						player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
-					}
+					player.sendMessage( ChatColor.GOLD + "Du musst in einem Clan sein um ein Feindliches Kšnigreich angreiffen zu kšnnen");
+					
 					
 				}
 					
 			}
+				
 			
 		} else {
 			
