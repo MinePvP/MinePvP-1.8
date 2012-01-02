@@ -26,6 +26,7 @@ public class ClanSpawnCommand {
 		if ( clan != null ) {
 			
 			if ( plugin.getClanManager().hasPlayerAFlag(player) == false ) {
+				
 				if ( clan.getClanSpawn() == true ) {
 					
 					if ( plugin.getClanManager().getClanByLocation( player.getLocation() ) == null || 

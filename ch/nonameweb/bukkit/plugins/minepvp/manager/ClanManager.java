@@ -503,37 +503,41 @@ public class ClanManager {
 		Integer y = location.getBlockY();
 		Integer z = location.getBlockZ();
 		
-		if ( clans != null ) {
-			for ( Clan clan : clans ) {
-				
-				// X
-				Integer clanMinusX = clan.getBaseX() - clan.getRadius();
-				Integer clanPlusX = clan.getBaseX() + clan.getRadius();
-				
-				// Y
-				Integer clanMinusY = clan.getBaseY() - clan.getRadius();
-				Integer clanPlusY = clan.getBaseY() + clan.getRadius();
-				
-				// Z
-				Integer clanMinusZ = clan.getBaseZ() - clan.getRadius();
-				Integer clanPlusZ = clan.getBaseZ() + clan.getRadius();
-
-				// Ist zwischen X
-				if ( clanPlusX > x && clanMinusX < x ) {
+		if ( location.getWorld().getName().equalsIgnoreCase("world") ) {
+			
+			if ( clans != null ) {
+				for ( Clan clan : clans ) {
 					
-					//if ( clanPlusY > y && clanMinusY < y ) {
+					// X
+					Integer clanMinusX = clan.getBaseX() - clan.getRadius();
+					Integer clanPlusX = clan.getBaseX() + clan.getRadius();
+					
+					// Y
+					Integer clanMinusY = clan.getBaseY() - clan.getRadius();
+					Integer clanPlusY = clan.getBaseY() + clan.getRadius();
+					
+					// Z
+					Integer clanMinusZ = clan.getBaseZ() - clan.getRadius();
+					Integer clanPlusZ = clan.getBaseZ() + clan.getRadius();
 
-						if ( clanPlusZ > z && clanMinusZ < z ) {
-							
-							return clan;
-							
-						}
+					// Ist zwischen X
+					if ( clanPlusX > x && clanMinusX < x ) {
 						
-					//}
+						//if ( clanPlusY > y && clanMinusY < y ) {
+
+							if ( clanPlusZ > z && clanMinusZ < z ) {
+								
+								return clan;
+								
+							}
+							
+						//}
+						
+					}
 					
 				}
-				
 			}
+			
 		}
 		
 		return null;

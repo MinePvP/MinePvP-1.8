@@ -79,7 +79,9 @@ public class MinePvPBlockListener extends BlockListener{
 					
 					// Wird auf die Flagge geschlagen?
 					if ( clanLand.getBaseLocation().equals( event.getBlock().getLocation() ) ) {
-													
+						
+						if ( clanManager.canClanAttackTheClan(player, clanLand) ) {
+							
 							// Flag Block Entfernen
 							block.setTypeId(0);
 							
@@ -98,14 +100,27 @@ public class MinePvPBlockListener extends BlockListener{
 							
 							// Das gegnerrische Team benachrichtigen das Ihre Flagge erbeutet wurde
 							clanManager.sendClanMessage(clanLand, ChatColor.GOLD + "Die Flagge wurde von " + player.getName() + " erbeutet.");
-						
-						
+						} else {
+							player.sendMessage(ChatColor.GOLD + "Du kannst die Flagge nicht nehmen, da du dich ins Feindliche Kšnigreich geschummelt hast.");
+						}
+												
 					}
 					
 					// Protecten von Chests und Furnance
 					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
 						event.setCancelled(true);
 					}
+					
+					// Signs
+					if ( block.getTypeId() == 63 || block.getTypeId() == 68 ) {
+						event.setCancelled(true);
+					}
+					
+					// Planzen
+					if ( block.getTypeId() == 83 || block.getTypeId() == 59 ) {
+						event.setCancelled(true);
+					}
+					
 									
 				}
 				

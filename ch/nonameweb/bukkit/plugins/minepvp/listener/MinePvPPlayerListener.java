@@ -64,6 +64,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 			
 			plugin.getCommandManager().processMinePvP(player, Helper.removeFirst(split));
 		}
+		
 	}
 	
 	/**
@@ -102,8 +103,6 @@ public class MinePvPPlayerListener extends PlayerListener{
 						if ( clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true ) {
 							
 							if ( clanTo.getAlertsystem() == 1 ) {
-								
-								player.sendMessage("Test");
 								
 								clanManager.sendClanMessage(clanTo, ChatColor.RED + "Ein feindlicher Spieler betritt euer Gebiet!");
 								
@@ -151,33 +150,74 @@ public class MinePvPPlayerListener extends PlayerListener{
 				player.sendMessage(ChatColor.GOLD + "Du verlässt das gebiet von " + clanFrom.getName() + ".");
 			} else {
 				
-				// Wenn in Wasser von einem feindlichen Clan kriegt er schaden // moat / wassergraben
-				if ( player.getLocation().getBlock().isLiquid() ) {
+				if ( clanFrom.getName().equalsIgnoreCase( clanTo.getName() ) ) {
 					
-					// Wenn der Spieler sich in einem Feindlichen Clangebiet bewegt
 					if ( playerClan != null ) {
 						
-						if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) != true && clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true  ) {
+						if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) ) {
 							
-							// Wenn der Clan einen Wassergraben hat
-							if ( clanFrom.getMoat() == true ) {
-								clanManager.playerMoatDamage(player);
+							// Spieler bewegt sich im eigenen Clan
+						
+						} else {						
+							
+							if ( clanManager.canClanAttackTheClan(player, clanTo) ) {
+								
+								// Wenn in Wasser von einem feindlichen Clan kriegt er schaden // moat / wassergraben
+								if ( player.getLocation().getBlock().isLiquid() ) {
+									
+																			
+									if ( clanFrom.getName().equalsIgnoreCase( playerClan.getName() ) != true && clanTo.getName().equalsIgnoreCase( playerClan.getName() ) != true  ) {
+										
+										// Wenn der Clan einen Wassergraben hat
+										if ( clanFrom.getMoat() == true ) {
+											clanManager.playerMoatDamage(player);
+										}
+										
+									}
+									
+								}
+								
+							} else {
+								
+								if ( player.hasPermission("minepvp.admin") ) {
+									
+								} else {
+									
+									// Wenn der Clan einen Spawn hat dahin sonst zum World Spawn
+									if ( playerClan.getClanSpawn() ) {
+									
+										if ( playerClan.getClanSpawnX() != 0 && playerClan.getClanSpawnZ() != 0 ) {
+											player.teleport( playerClan.getClanSpawnLocation() );
+										} else {
+											player.teleport( playerClan.getBaseLocation() );
+										}
+										
+									} else {
+										player.teleport( new Location(plugin.getServer().getWorld("world"), plugin.getServer().getWorld("world").getSpawnLocation().getX(), plugin.getServer().getWorld("world").getSpawnLocation().getY() + 4, plugin.getServer().getWorld("world").getSpawnLocation().getZ()) );
+									}
+									
+									player.sendMessage(ChatColor.GOLD + "Du befindest dich unerlaubt in einem feindlichem Clangebiet.");
+									
+								}
+								
 							}
-							
+						
 						}
 						
 					} else {
+						if ( player.hasPermission("minepvp.admin") ) {
+							
+						} else {
 						
-						// Wenn der Clan einen Wassergraben hat
-						if ( clanFrom.getMoat() == true ) {
-							clanManager.playerMoatDamage(player);
+							player.teleport( new Location(plugin.getServer().getWorld("world"), plugin.getServer().getWorld("world").getSpawnLocation().getX(), plugin.getServer().getWorld("world").getSpawnLocation().getY() + 4, plugin.getServer().getWorld("world").getSpawnLocation().getZ()) );
+						
+							player.sendMessage(ChatColor.GOLD + "Du befindest dich unerlaubt in einem feindlichem Clangebiet.");
+						
 						}
 						
 					}
 					
-					
 				}
-				
 				
 			}
 			
@@ -248,7 +288,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 					// Wenn jemand noch eine Flagge hat wird diese Resettet	
 					plugin.getClanManager().resetFlag(player);
 					
-				}			
+				}
 				
 			} else {
 				
@@ -279,7 +319,7 @@ public class MinePvPPlayerListener extends PlayerListener{
 					
 					// Wenn der Clan einen Spawn hat dahin sonst zum World Spawn
 					if ( playerClan.getClanSpawn() ) {
-						if ( playerClan.getClanSpawnX() != null ) {
+						if ( playerClan.getClanSpawnX() != 0 && playerClan.getClanSpawnZ() != 0 ) {
 							player.teleport( playerClan.getClanSpawnLocation() );
 						} else {
 							player.teleport( playerClan.getBaseLocation() );
