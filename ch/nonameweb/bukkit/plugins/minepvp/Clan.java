@@ -1,5 +1,7 @@
 package ch.nonameweb.bukkit.plugins.minepvp;
 
+import java.util.Date;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -40,8 +42,10 @@ public class Clan {
 	
 	// Attack
 	private Boolean attack = false;
+	private Boolean attacked = false;
 	private Clan attackedClan = null;
-	
+	private Integer attackedCounter = null;
+	private Integer attackCounter = null;
 	
 	// Kill Counter
 	private Integer playerKills = null;
@@ -71,10 +75,14 @@ public class Clan {
 		setBaseZ(location.getBlockZ());
 		
 		setStufe(0);
-		setPoints(0);
+		setPoints(20);
 		
 		setPlayerKills(0);
 		setPlayerKillCounter(0);
+		
+		setAttackedCounter(0);
+		setAttackCounter(0);
+			
 		
 		return true;
 	}
@@ -117,6 +125,10 @@ public class Clan {
 		// Kills
 		setPlayerKills( config.getInt("Clans." + getName() + ".Kills.Player") );
 		setPlayerKillCounter( config.getInt("Clans." + getName() + ".Kills.PlayerCounter") );
+		
+		// Attack
+		setAttackedCounter( config.getInt("Clans." + getName() + ".Attacked.Counter") );
+		setAttackCounter( config.getInt("Clans." + getName() + ".Attack.Counter") );
 	}
 	
 	/**
@@ -154,6 +166,10 @@ public class Clan {
 		// Kills
 		config.set("Clans." + getName() + ".Kills.Player", getPlayerKills()	);
 		config.set("Clans." + getName() + ".Kills.PlayerCounter", getPlayerKillCounter() );
+		
+		// Attack
+		config.set("Clans." + getName() + ".Attacked.Counter", getAttackedCounter() );
+		config.set("Clans." + getName() + ".Attack.Counter", getAttackCounter() );
 	}
 	
 	/**
@@ -445,7 +461,47 @@ public class Clan {
 		}
 		
 	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+
+	public Integer getAttackedCounter() {
+		return attackedCounter;
+	}
+
+	public void setAttackedCounter(Integer attackedCounter) {
+		this.attackedCounter = attackedCounter;
+	}
+
+	public Boolean getAttacked() {
+		return attacked;
+	}
+
+	public void setAttacked(Boolean attacked) {
+		this.attacked = attacked;
+	}
+
+	public Integer getAttackCounter() {
+		return attackCounter;
+	}
+
+	public void setAttackCounter(Integer attackCounter) {
+		this.attackCounter = attackCounter;
+	}
 	
+	public void addAttack() {
+		this.attackCounter++;
+	}
+	
+	public void addAttacked() {
+		this.attackedCounter++;
+	}
 	
 	
 }

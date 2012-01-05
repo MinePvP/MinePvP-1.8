@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import ch.nonameweb.bukkit.plugins.minepvp.Clan;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
+import ch.nonameweb.bukkit.plugins.minepvp.tasks.ResetAttackTask;
 import ch.nonameweb.bukkit.plugins.minepvp.tasks.StartAttackTask;
 import ch.nonameweb.bukkit.plugins.minepvp.tasks.StopAttackTask;
 
@@ -37,21 +38,34 @@ public class AttackCommand {
 					if ( plugin.getClanManager().isMinPlayerOnline(clan2) ) {
 						
 						if ( clan2.getAttackedClan() == null ) {
-							long time = plugin.getSettingsManager().getAttackTime();
-							long delay = plugin.getSettingsManager().getAttackDelay();							
 							
-							plugin.getClanManager().sendClanMessage(clan, ChatColor.GREEN + "Ihr kšnnt das Kšnigreich " + clan2.getName() + " in " + delay + "min angreifen.");
-							plugin.getClanManager().sendClanMessage(clan2, ChatColor.RED + "Ihr kšnnt in " + delay + "min vom Kšnigreich " + clan.getName() + " angegriffen werden.");
-							
-							time = ( time * 60 ) * 20L;
-							delay = ( delay * 60 ) * 20L;
-							time = time + delay;
-							
-							clan2.setAttackedClan(clan);
-							
-							
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), delay); // ToDo now is a test delay
-							plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), time); // Test time
+							if ( clan2.getAttacked() == false ) {
+								
+								long time = plugin.getSettingsManager().getAttackTime();
+								long delay = plugin.getSettingsManager().getAttackDelay();
+								long reset = plugin.getSettingsManager().getAttackResetTime();
+								
+								plugin.getClanManager().sendClanMessage(clan, ChatColor.GREEN + "Ihr kšnnt das Kšnigreich " + clan2.getName() + " in " + delay + "min angreifen.");
+								plugin.getClanManager().sendClanMessage(clan2, ChatColor.RED + "Ihr kšnnt in " + delay + "min vom Kšnigreich " + clan.getName() + " angegriffen werden.");
+								
+								clan.addAttack();
+								clan2.addAttacked();
+								
+								time = ( time * 60 ) * 20L;
+								delay = ( delay * 60 ) * 20L;
+								time = time + delay;
+								reset = reset + time;
+								
+								clan2.setAttackedClan(clan);
+								
+								
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), delay);
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), time);
+								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ResetAttackTask(plugin, clan.getName(), clan2.getName() ), reset);
+								
+							} else {
+								player.sendMessage(ChatColor.GOLD + "Dieses Kšnigreich kann zurzeit nicht angegriffen werden da es erst vor kurzem von einem anderem Kšnigreich angegriffen wurde.");
+							}							
 							
 						} else {
 							player.sendMessage(ChatColor.GOLD + "Dieses Kšnigreich wird bereits von Kšnigreich " + clan2.getAttackedClan().getName() + " angegriffen.");

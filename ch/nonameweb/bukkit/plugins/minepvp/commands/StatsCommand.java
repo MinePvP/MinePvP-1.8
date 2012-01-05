@@ -27,10 +27,10 @@ public class StatsCommand {
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
 		player.sendMessage(ChatColor.GREEN + "                            Stats");
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");
-		player.sendMessage(ChatColor.WHITE + "Clan Name        Erroberte Flaggen         Kills");
+		player.sendMessage(ChatColor.WHITE + "Clan Name        Erroberte Flaggen         Kills           Attacks  :  Attacked");
 		
 		for ( Clan clan : clans ) {
-			player.sendMessage(ChatColor.WHITE + clan.getName() + "              " + ChatColor.RED + clan.getFlags() + "                        " + ChatColor.RED + clan.getPlayerKills() );
+			player.sendMessage(ChatColor.WHITE + clan.getName() + "              " + ChatColor.RED + clan.getFlags() + "                        " + ChatColor.RED + clan.getPlayerKills() + "      " + clan.getAttackCounter() + " : "  + clan.getAttackedCounter() );
 		}
 		
 		player.sendMessage(ChatColor.GREEN + "-----------------------------------------------------");

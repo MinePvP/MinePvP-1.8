@@ -38,6 +38,7 @@ public class SettingsManager {
 	
 	private Integer attackDelay;
 	private Integer attackTime;
+	private Integer attackResetTime;
 	
 	private Integer repairChestKosten;
 	
@@ -104,8 +105,9 @@ public class SettingsManager {
 		config.addDefault("Settings.CTF.MinPlayerOnline", 3);
 		
 		// Attack
-	    config.addDefault("Settings.Attack.Time", 30);
+	    config.addDefault("Settings.Attack.Time", 20);
 	    config.addDefault("Settings.Attack.Delay", 10);
+	    config.addDefault("Settings.Attack.Reset", 30);
 		
 	    // RepariChest
 	    config.addDefault("Settings.Repair.Kosten", 10);
@@ -144,6 +146,7 @@ public class SettingsManager {
 		
 		setAttackDelay( config.getInt("Settings.Attack.Delay") );
 		setAttackTime( config.getInt("Settings.Attack.Time") );
+		setAttackResetTime( config.getInt("Settings.Attack.Reset") );
 		
 		setRepairChestKosten( config.getInt("Settings.Repair.Kosten") );
 		
@@ -177,6 +180,7 @@ public class SettingsManager {
 		
 		config.set("Settings.Attack.Delay", getAttackDelay());
 		config.set("Settings.Attack.Time", getAttackTime());
+		config.set("Settings.Attack.Reset", getAttackResetTime());
 		
 		config.set("Settings.Repair.Kosten", getRepairChestKosten());
 		
@@ -341,6 +345,14 @@ public class SettingsManager {
 
 	public void setMaxAbstand(Integer maxAbstand) {
 		this.maxAbstand = maxAbstand;
+	}
+
+	public Integer getAttackResetTime() {
+		return attackResetTime;
+	}
+
+	public void setAttackResetTime(Integer attackResetTime) {
+		this.attackResetTime = attackResetTime;
 	}
 	
 	

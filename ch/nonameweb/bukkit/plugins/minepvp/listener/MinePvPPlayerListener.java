@@ -124,10 +124,18 @@ public class MinePvPPlayerListener extends PlayerListener{
 						
 						player.teleport( event.getFrom() );
 						
-						if ( clanManager.isClanTheAttackedClan(playerClan, clanTo) ) {
-							player.sendMessage(ChatColor.GOLD + "Euer Kšnigreich hatt schon einen Angriff gestartet, wartet bis Ihr das GO kriegt.");
+						if ( clanTo.getAttacked() ) {
+							
+							player.sendMessage(ChatColor.GOLD + "Dieses Kšnigreich kann zurzeit nicht angegriffen werden da es erst von einem anderem Kšnigreich angegriffen wurde.");
+							
 						} else {
-							player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
+							
+							if ( clanManager.isClanTheAttackedClan(playerClan, clanTo) ) {
+								player.sendMessage(ChatColor.GOLD + "Euer Kšnigreich hatt schon einen Angriff gestartet, wartet bis Ihr das GO kriegt.");
+							} else {
+								player.sendMessage(ChatColor.GOLD + "Um dieses Kšnigreich anzugreiffen /minepvp attack " + clanTo.getName() + "");
+							}
+							
 						}
 						
 					}
