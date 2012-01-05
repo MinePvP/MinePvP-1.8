@@ -222,25 +222,33 @@ public class ClanManager {
 		
 		// Distanz zum Spawn
 		if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > settingsManager.getMinAbstand() ) {
-		
-			if ( clans.size() >= 1 ) {
+			
+			if ( plugin.getServer().getWorld("world").getSpawnLocation().distance( player.getLocation() ) > settingsManager.getMaxAbstand() ) {
 				
-				for ( Clan clan : clans ) {
+				if ( clans.size() >= 1 ) {
 					
-					Location clanLocation = new Location( plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
-										
-					// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
-					// TODO Checken ob das wirklich richtig berechnet wird!!!
-					if ( clanLocation.distance( player.getLocation() ) > settingsManager.getMinAbstand() ) {
-						return true;
-					} else {
-						player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Clan " + clan.getName() + ".");
+					for ( Clan clan : clans ) {
+						
+						Location clanLocation = new Location( plugin.getServer().getWorld("world"), clan.getBaseX(), clan.getBaseY(), clan.getBaseZ());
+											
+						// Die Distanz zur Base muss einen mindest abstand zur gegner base haben
+						// TODO Checken ob das wirklich richtig berechnet wird!!!
+						if ( clanLocation.distance( player.getLocation() ) > settingsManager.getMinAbstand() ) {
+							return true;
+						} else {
+							player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Clan " + clan.getName() + ".");
+						}
+						
 					}
-					
+				} else {
+					return true;
 				}
+				
 			} else {
-				return true;
+				player.sendMessage(ChatColor.GOLD + "Du bist zu weit weg vom Spawn.");
 			}
+			
+			
 			
 		} else {
 			player.sendMessage(ChatColor.GOLD + "Du bist zu nahe am Spawn.");
@@ -592,6 +600,7 @@ public class ClanManager {
 			
 			if ( clan.getName().equalsIgnoreCase( plugin.getClanManager().getClanByPlayer(player).getName() ) ) {
 				clan.addPoints( settingsManager.getCtfPoints() );
+				clan.addFlag();
 				clan.save(plugin.getConfig());
 			}
 			

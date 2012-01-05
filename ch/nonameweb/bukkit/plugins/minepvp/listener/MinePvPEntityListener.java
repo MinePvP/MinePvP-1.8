@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
+import ch.nonameweb.bukkit.plugins.minepvp.Clan;
 import ch.nonameweb.bukkit.plugins.minepvp.MinePvP;
 import ch.nonameweb.bukkit.plugins.minepvp.manager.ClanManager;
 
@@ -38,8 +39,23 @@ public class MinePvPEntityListener extends EntityListener {
 				
 				clanManager.resetFlag( ((Player) ent));
 			}
+			
+			
+			Player player = (Player) ent;
+			
+			Clan clan = plugin.getClanManager().getClanByPlayer(player);
+			
+			if ( clan != null ) {
+
+				clan.addPlayerKill();
+				
+			}
+			
+			
 	    }
 		
+	    
+	    
 		
 	}
 

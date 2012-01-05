@@ -21,6 +21,7 @@ public class SettingsManager {
 	private Integer ersteStufeMinPlayer;
 	
 	private Integer minAbstand;
+	private Integer maxAbstand;
 	
 	private Integer clanSpawnKosten;
 	
@@ -57,6 +58,7 @@ public class SettingsManager {
 		config.addDefault("Settings.Land.ErsteStufe.MinPlayer", 4);
 		
 		config.addDefault("Settings.Land.MinAbstand", 500);
+		config.addDefault("Settings.Land.MinAbstand", 800);
 	
 		config.addDefault("Settings.Land.ClanSpawn.Kosten", 20);
 		
@@ -125,6 +127,7 @@ public class SettingsManager {
 		setErsteStufeMinPlayer( config.getInt("Settings.Land.ErsteStufe.MinPlayer") );
 		
 		setMinAbstand( config.getInt("Settings.Land.MinAbstand") );
+		setMaxAbstand( config.getInt("Settings.Land.MaxAbstand") );
 		
 		setClanSpawnKosten( config.getInt("Settings.Land.ClanSpawn.Kosten") );
 		
@@ -157,6 +160,7 @@ public class SettingsManager {
 		config.set("Settings.Land.ErsteStufe.MinPlayer", getErsteStufeMinPlayer());
 		
 		config.set("Settings.Land.MinAbstand", getMinAbstand());
+		config.set("Settings.Land.MaxAbstand", getMaxAbstand());
 		
 		config.set("Settings.Land.ClanSpawn.Kosten", getClanSpawnKosten());
 		
@@ -329,6 +333,14 @@ public class SettingsManager {
 
 	public void setRepairChestKosten(Integer repairChestKosten) {
 		this.repairChestKosten = repairChestKosten;
+	}
+
+	public Integer getMaxAbstand() {
+		return maxAbstand;
+	}
+
+	public void setMaxAbstand(Integer maxAbstand) {
+		this.maxAbstand = maxAbstand;
 	}
 	
 	

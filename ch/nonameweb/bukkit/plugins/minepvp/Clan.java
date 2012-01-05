@@ -42,6 +42,11 @@ public class Clan {
 	private Boolean attack = false;
 	private Clan attackedClan = null;
 	
+	
+	// Kill Counter
+	private Integer playerKills = null;
+	private Integer playerKillCounter = null;
+	
 	/**
 	 * 
 	 */
@@ -67,6 +72,9 @@ public class Clan {
 		
 		setStufe(0);
 		setPoints(0);
+		
+		setPlayerKills(0);
+		setPlayerKillCounter(0);
 		
 		return true;
 	}
@@ -104,6 +112,11 @@ public class Clan {
 		
 		// Wassergraben
 		setMoat( config.getBoolean("Clans." + getName() + ".Moat", false) );
+		
+		
+		// Kills
+		setPlayerKills( config.getInt("Clans." + getName() + ".Kills.Player") );
+		setPlayerKillCounter( config.getInt("Clans." + getName() + ".Kills.PlayerCounter") );
 	}
 	
 	/**
@@ -137,6 +150,10 @@ public class Clan {
 	
 		// Wassergraben
 		config.set("Clans." + getName() + ".Moat", getMoat());
+		
+		// Kills
+		config.set("Clans." + getName() + ".Kills.Player", getPlayerKills()	);
+		config.set("Clans." + getName() + ".Kills.PlayerCounter", getPlayerKillCounter() );
 	}
 	
 	/**
@@ -280,7 +297,10 @@ public class Clan {
 	 */
 	public void addPoints( Integer points ) {
 		this.points += points;
-		this.flags += 1;
+	}
+	
+	public void addFlag() {
+		this.flags++;
 	}
 
 	/**
@@ -396,6 +416,34 @@ public class Clan {
 
 	public void setAttack(Boolean attack) {
 		this.attack = attack;
+	}
+
+	public Integer getPlayerKills() {
+		return playerKills;
+	}
+
+	public void setPlayerKills(Integer playerKills) {
+		this.playerKills = playerKills;
+	}
+
+	public Integer getPlayerKillCounter() {
+		return playerKillCounter;
+	}
+
+	public void setPlayerKillCounter(Integer playerKillCounter) {
+		this.playerKillCounter = playerKillCounter;
+	}
+	
+	public void addPlayerKill() {
+		
+		this.playerKillCounter++;
+		this.playerKills++;
+		
+		if ( this.playerKillCounter == 10 ) {
+			this.addPoints( 2 );
+			this.setPlayerKillCounter(0);
+		}
+		
 	}
 	
 	

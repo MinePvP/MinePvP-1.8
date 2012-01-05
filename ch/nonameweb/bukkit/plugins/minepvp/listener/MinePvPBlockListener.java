@@ -106,19 +106,29 @@ public class MinePvPBlockListener extends BlockListener{
 												
 					}
 					
-					// Protecten von Chests und Furnance
-					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
-						event.setCancelled(true);
-					}
+					if ( player.isOp()  && player.hasPermission("minepvp.admin") ) {
 					
-					// Signs
-					if ( block.getTypeId() == 63 || block.getTypeId() == 68 ) {
-						event.setCancelled(true);
-					}
-					
-					// Planzen
-					if ( block.getTypeId() == 83 || block.getTypeId() == 59 ) {
-						event.setCancelled(true);
+					} else {
+						
+						// Protecten von Chests und Furnance
+						if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 ) {						
+							event.setCancelled(true);
+						}
+						
+						// Signs
+						if ( block.getTypeId() == 63 || block.getTypeId() == 68 ) {
+							event.setCancelled(true);
+						}
+						
+						if ( block.getTypeId() == 50 ) {
+							event.setCancelled(true);
+						}
+						
+						// Planzen
+						if ( block.getTypeId() == 83 || block.getTypeId() == 59 ) {
+							event.setCancelled(true);
+						}
+						
 					}
 					
 									

@@ -417,20 +417,32 @@ public class MinePvPPlayerListener extends PlayerListener{
 						
 					} else {
 						
-						// Chests and Furnances
-						if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 || block.getTypeId() == 26 || block.getTypeId() == 23 || block.getTypeId() == 116 || block.getTypeId() == 117 || block.getTypeId() == 58) {
-							clanManager.playerDamage(player);
-							event.setCancelled(true);
-						}					
+						if ( player.isOp() || player.hasPermission("minepvp.admin") ) {
+							
+						} else {
+							
+							// Chests and Furnances
+							if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 || block.getTypeId() == 26 || block.getTypeId() == 23 || block.getTypeId() == 116 || block.getTypeId() == 117 || block.getTypeId() == 58) {
+								clanManager.playerDamage(player);
+								event.setCancelled(true);
+							}
+							
+						}				
 						
 					}
 					
 				} else {
 					
-					// Chests and Furnances
-					if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 || block.getTypeId() == 26 || block.getTypeId() == 23 || block.getTypeId() == 116 || block.getTypeId() == 117 || block.getTypeId() == 58) {
-						clanManager.playerDamage(player);
-						event.setCancelled(true);
+					if ( player.isOp() || player.hasPermission("minepvp.admin") ) {
+						
+					} else {
+						
+						// Chests and Furnances
+						if ( block.getTypeId() == 54 || block.getTypeId() == 61 || block.getTypeId() == 62 || block.getTypeId() == 26 || block.getTypeId() == 23 || block.getTypeId() == 116 || block.getTypeId() == 117 || block.getTypeId() == 58) {
+							clanManager.playerDamage(player);
+							event.setCancelled(true);
+						}
+						
 					}	
 					
 				}
