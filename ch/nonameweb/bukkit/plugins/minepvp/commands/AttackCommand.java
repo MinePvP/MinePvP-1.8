@@ -1,5 +1,7 @@
 package ch.nonameweb.bukkit.plugins.minepvp.commands;
 
+import java.util.Date;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -35,46 +37,56 @@ public class AttackCommand {
 				
 				if ( clan2 != null ) {
 					
-					if ( plugin.getClanManager().isMinPlayerOnline(clan2) ) {
+					// Noobschutz ausrechnen
+					long noob = plugin.getSettingsManager().getAttackNewClanProtection();
+					noob = noob * 86400000; // 86400000 millisekunden ist 1 Tag
+					long date1 = clan2.getCreationDate().getTime();
+					
+					if ( new Date().getTime() > date1 ) {
 						
-						if ( clan2.getAttackedClan() == null ) {
+						if ( plugin.getClanManager().isMinPlayerOnline(clan2) ) {
 							
-							if ( clan2.getAttacked() == false ) {
+							if ( clan2.getAttackedClan() == null ) {
 								
-								long time = plugin.getSettingsManager().getAttackTime();
-								long delay = plugin.getSettingsManager().getAttackDelay();
-								long reset = plugin.getSettingsManager().getAttackResetTime();
-								
-								plugin.getClanManager().sendClanMessage(clan, ChatColor.GREEN + "Ihr könnt das Königreich " + clan2.getName() + " in " + delay + "min angreifen.");
-								plugin.getClanManager().sendClanMessage(clan2, ChatColor.RED + "Ihr könnt in " + delay + "min vom Königreich " + clan.getName() + " angegriffen werden.");
-								
-								clan.addAttack();
-								clan2.addAttacked();
-								
-								time = ( time * 60 ) * 20L;
-								delay = ( delay * 60 ) * 20L;
-								time = time + delay;
-								reset = reset + time;
-								
-								clan2.setAttackedClan(clan);
-								
-								
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), delay);
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), time);
-								plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ResetAttackTask(plugin, clan.getName(), clan2.getName() ), reset);
+								if ( clan2.getAttacked() == false ) {
+									
+									long time = plugin.getSettingsManager().getAttackTime();
+									long delay = plugin.getSettingsManager().getAttackDelay();
+									long reset = plugin.getSettingsManager().getAttackResetTime();
+									
+									plugin.getClanManager().sendClanMessage(clan, ChatColor.GREEN + "Ihr könnt das Königreich " + clan2.getName() + " in " + delay + "min angreifen.");
+									plugin.getClanManager().sendClanMessage(clan2, ChatColor.RED + "Ihr könnt in " + delay + "min vom Königreich " + clan.getName() + " angegriffen werden.");
+									
+									clan.addAttack();
+									clan2.addAttacked();
+									
+									time = ( time * 60 ) * 20L;
+									delay = ( delay * 60 ) * 20L;
+									time = time + delay;
+									reset = reset + time;
+									
+									clan2.setAttackedClan(clan);
+									
+									plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StartAttackTask(plugin, clan.getName(), clan2.getName() ), delay);
+									plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new StopAttackTask(plugin, clan.getName(), clan2.getName() ), time);
+									plugin.getServer().getScheduler().scheduleSyncDelayedTask( plugin, new ResetAttackTask(plugin, clan.getName(), clan2.getName() ), reset);
+									
+								} else {
+									player.sendMessage(ChatColor.GOLD + "Dieses Königreich kann zurzeit nicht angegriffen werden da es erst vor kurzem von einem anderem Königreich angegriffen wurde.");
+								}							
 								
 							} else {
-								player.sendMessage(ChatColor.GOLD + "Dieses Königreich kann zurzeit nicht angegriffen werden da es erst vor kurzem von einem anderem Königreich angegriffen wurde.");
-							}							
+								player.sendMessage(ChatColor.GOLD + "Dieses Königreich wird bereits von Königreich " + clan2.getAttackedClan().getName() + " angegriffen.");
+							}						
 							
 						} else {
-							player.sendMessage(ChatColor.GOLD + "Dieses Königreich wird bereits von Königreich " + clan2.getAttackedClan().getName() + " angegriffen.");
-						}						
+							player.sendMessage(ChatColor.GOLD + "Beim anzugreifenden Königreich sind zu wenige Spieler Online.");
+						}
 						
 					} else {
-						player.sendMessage(ChatColor.GOLD + "Beim anzugreifenden Königreich sind zu wenige Spieler Online.");
+						player.sendMessage(ChatColor.GOLD + "Das anzugreifende Königreich ist noch im Noobschutz.");						
 					}
-									
+					
 				} else {
 					player.sendMessage(ChatColor.GOLD + "Dies ist kein gültiger Clan.");
 				}

@@ -39,6 +39,7 @@ public class SettingsManager {
 	private Integer attackDelay;
 	private Integer attackTime;
 	private Integer attackResetTime;
+	private Integer attackNewClanProtection;
 	
 	private Integer repairChestKosten;
 	
@@ -108,6 +109,7 @@ public class SettingsManager {
 	    config.addDefault("Settings.Attack.Time", 20);
 	    config.addDefault("Settings.Attack.Delay", 10);
 	    config.addDefault("Settings.Attack.Reset", 30);
+	    config.addDefault("Settings.Attack.NewClanProtection", 3);
 		
 	    // RepariChest
 	    config.addDefault("Settings.Repair.Kosten", 10);
@@ -147,6 +149,7 @@ public class SettingsManager {
 		setAttackDelay( config.getInt("Settings.Attack.Delay") );
 		setAttackTime( config.getInt("Settings.Attack.Time") );
 		setAttackResetTime( config.getInt("Settings.Attack.Reset") );
+		setAttackNewClanProtection( config.getInt("Settings.Attack.NewClanProtection") );
 		
 		setRepairChestKosten( config.getInt("Settings.Repair.Kosten") );
 		
@@ -181,6 +184,7 @@ public class SettingsManager {
 		config.set("Settings.Attack.Delay", getAttackDelay());
 		config.set("Settings.Attack.Time", getAttackTime());
 		config.set("Settings.Attack.Reset", getAttackResetTime());
+		config.set("Settings.Attack.NewClanProtection", getAttackNewClanProtection());
 		
 		config.set("Settings.Repair.Kosten", getRepairChestKosten());
 		
@@ -353,6 +357,14 @@ public class SettingsManager {
 
 	public void setAttackResetTime(Integer attackResetTime) {
 		this.attackResetTime = attackResetTime;
+	}
+
+	public Integer getAttackNewClanProtection() {
+		return attackNewClanProtection;
+	}
+
+	public void setAttackNewClanProtection(Integer attackNewClanProtection) {
+		this.attackNewClanProtection = attackNewClanProtection;
 	}
 	
 	

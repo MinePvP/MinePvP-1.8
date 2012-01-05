@@ -1,5 +1,9 @@
 package ch.nonameweb.bukkit.plugins.minepvp;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.bukkit.Location;
@@ -51,6 +55,9 @@ public class Clan {
 	private Integer playerKills = null;
 	private Integer playerKillCounter = null;
 	
+	// Creation Date
+	private Date creationDate = null;
+	
 	/**
 	 * 
 	 */
@@ -83,6 +90,7 @@ public class Clan {
 		setAttackedCounter(0);
 		setAttackCounter(0);
 			
+		generateCreationDate();
 		
 		return true;
 	}
@@ -129,6 +137,15 @@ public class Clan {
 		// Attack
 		setAttackedCounter( config.getInt("Clans." + getName() + ".Attacked.Counter") );
 		setAttackCounter( config.getInt("Clans." + getName() + ".Attack.Counter") );
+		
+		// CreationDate
+		try {
+			setCreationDateFromString( config.getString("Clans." + getName() + ".CreationDate") );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -170,6 +187,9 @@ public class Clan {
 		// Attack
 		config.set("Clans." + getName() + ".Attacked.Counter", getAttackedCounter() );
 		config.set("Clans." + getName() + ".Attack.Counter", getAttackCounter() );
+		
+		// CreationDate
+		config.set("Clans." + getName() + ".CreationDate", getStringFromCreationDate());
 	}
 	
 	/**
@@ -503,5 +523,23 @@ public class Clan {
 		this.attackedCounter++;
 	}
 	
+	public void generateCreationDate() {
+		this.creationDate = new Date();
+	}
+	
+	public String getStringFromCreationDate() {
+		
+		DateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+		String strDate = formatter.format(this.getCreationDate());
+		
+		return strDate;
+	}
+	
+	public void setCreationDateFromString ( String strDate ) throws ParseException {
+		
+		DateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+		setCreationDate( (Date)formatter.parse( strDate ) );
+		
+	}
 	
 }
